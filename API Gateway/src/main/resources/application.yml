@@ -8,3 +8,32 @@ eureka:
 spring:
   application:
     name: api-gateway
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+            authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
+            user-name-attribute: preferred_username
+            user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+            user-info-authentication-method: header
+        registration:
+          internet-banking-core-client:
+            provider: keycloak
+            client-id: internet-banking-core-client
+            client-secret: 0efd3e37-258e-4488-96ae-1dfe34679c9d
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
+            scope: openid
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+
+app:
+  config:
+    keycloak:
+      url: http://localhost:8571/auth
+      realm: banking-service
+
