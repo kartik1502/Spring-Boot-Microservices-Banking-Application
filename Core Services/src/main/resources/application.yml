@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: core-services
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/core_services
+    username: root
+    password: root
+
+server:
+  port: 8081
