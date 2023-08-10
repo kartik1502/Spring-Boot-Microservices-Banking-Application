@@ -7,6 +7,5 @@ CREATE TABLE `transaction`
     `transaction_id`   varchar(50) NOT NULL,
     `account_id`       bigint(20) DEFAULT NULL,
     PRIMARY KEY (`id`),
-    KEY                `FKk9w2ogq595jbe8r2due7vv3xr` (`account_id`),
     CONSTRAINT `FKk9w2ogq595jbe8r2due7vv3xr` FOREIGN KEY (`account_id`) REFERENCES `bank_account` (`bank_account_id`)
 );
