@@ -1,6 +1,8 @@
 spring:
   application:
     name: core-services
+    bad_request: 403
+
   jpa:
     hibernate:
       ddl-auto: update
