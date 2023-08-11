@@ -17,5 +17,5 @@ spring:
         - id: core-services
           uri: lb://core-services
           predicates:
-            - Path=/users/**,/bank-accounts/**
+            - Path=/users/**,/bank-accounts/**,/utility-accounts/**
 
