@@ -1,6 +1,7 @@
 package org.training.core.services.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,5 +19,10 @@ public class UserController {
     @GetMapping("/{identificationNumber}")
     public ResponseEntity readUser(@PathVariable String identificationNumber) {
         return ResponseEntity.ok(userService.readUser(identificationNumber));
+    }
+
+    @GetMapping
+    public ResponseEntity readUsers(Pageable pageable) {
+        return ResponseEntity.ok(userService.readUsers(pageable));
     }
 }
