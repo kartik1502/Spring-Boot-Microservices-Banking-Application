@@ -19,4 +19,9 @@ public class UtilityAccountController {
     public ResponseEntity readUtilityAccount(@PathVariable String providerNumber){
         return ResponseEntity.ok(utilityAccountService.readUtilityAccount(providerNumber));
     }
+
+    @GetMapping("/{utilityId}")
+    public ResponseEntity readUtilityAccount(@PathVariable Long utilityId){
+        return ResponseEntity.ok(utilityAccountService.readUtilityAccount(utilityId));
+    }
 }

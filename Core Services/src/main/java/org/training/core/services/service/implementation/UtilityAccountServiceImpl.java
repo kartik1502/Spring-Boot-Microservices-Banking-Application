@@ -25,4 +25,13 @@ public class UtilityAccountServiceImpl implements UtilityAccountService {
         List<UtilityAccount> utilityAccounts = utilityAccountRepository.findUtilityAccountByProviderName(providerName);
         return utilityAccountMapper.convertToDtoList(utilityAccounts);
     }
+
+    @Override
+    public UtilityAccountDto readUtilityAccount(Long utilityId) {
+
+        UtilityAccount utilityAccount = utilityAccountRepository.findById(utilityId)
+                .orElseThrow(() -> new ResourceNotFound("Utility Account with id:"+utilityId+" not found on the server"));
+
+        return utilityAccountMapper.convertToDto(utilityAccount);
+    }
 }
