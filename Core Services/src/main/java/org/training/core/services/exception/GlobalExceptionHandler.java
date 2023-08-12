@@ -30,4 +30,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFound ex, WebRequest request) {
         return new ResponseEntity<>(new ErrorResponse(Set.of(ex.getLocalizedMessage()), errorCodeBadRequest), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ErrorResponse> handleInsufficientBalanceException(InsufficientBalanceException ex, WebRequest request) {
+        return new ResponseEntity<>(new ErrorResponse(Set.of(ex.getLocalizedMessage()), errorCodeBadRequest), HttpStatus.BAD_REQUEST);
+    }
 }

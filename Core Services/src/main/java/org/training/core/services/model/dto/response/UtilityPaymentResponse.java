@@ -1,4 +1,4 @@
-package org.training.core.services.model.dto.repuest.response;
+package org.training.core.services.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
