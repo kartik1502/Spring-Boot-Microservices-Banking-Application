@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.training.core.services.model.dto.repuest.FundTransferRequest;
+import org.training.core.services.model.dto.repuest.UtilityPaymentRequest;
 import org.training.core.services.service.TransactionService;
 
 @RestController
@@ -16,8 +17,13 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @PostMapping
+    @PostMapping("/fund-transfers")
     public ResponseEntity fundTransfer(@RequestBody FundTransferRequest fundTransferRequest) {
         return ResponseEntity.ok(transactionService.fundTransfer(fundTransferRequest));
+    }
+
+    @PostMapping("/utility-payments")
+    public ResponseEntity utilityPayment(@RequestBody UtilityPaymentRequest utilityPaymentRequest) {
+        return ResponseEntity.ok(transactionService.utilityPayment(utilityPaymentRequest));
     }
 }

@@ -5,14 +5,18 @@ import org.springframework.stereotype.Service;
 import org.training.core.services.exception.InsufficientBalanceException;
 import org.training.core.services.exception.ResourceNotFound;
 import org.training.core.services.model.TransactionType;
+import org.training.core.services.model.dto.UtilityAccountDto;
 import org.training.core.services.model.dto.repuest.FundTransferRequest;
+import org.training.core.services.model.dto.repuest.UtilityPaymentRequest;
 import org.training.core.services.model.dto.response.FundTransferResponse;
+import org.training.core.services.model.dto.response.UtilityPaymentResponse;
 import org.training.core.services.model.entities.BankAccount;
 import org.training.core.services.model.entities.Transaction;
 import org.training.core.services.model.mapper.BankAccountMapper;
 import org.training.core.services.repositories.BankAccountRepository;
 import org.training.core.services.repositories.TransactionRepository;
 import org.training.core.services.service.TransactionService;
+import org.training.core.services.service.UtilityAccountService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,6 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     private BankAccountMapper bankAccountMapper = new BankAccountMapper();
 
+    private final UtilityAccountService utilityAccountService;
     private final TransactionRepository transactionRepository;
 
     private final BankAccountRepository bankAccountRepository;
@@ -76,6 +81,34 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.saveAll(transactions);
 
         return transactionId;
+    }
+
+    @Override
+    public UtilityPaymentResponse utilityPayment(UtilityPaymentRequest utilityPaymentRequest) {
+
+        String transactionId = UUID.randomUUID().toString();
+
+        BankAccount bankAccount = bankAccountRepository.findBankAccountByAccountNumber(utilityPaymentRequest.getAccountNumber())
+                .orElseThrow(() -> new ResourceNotFound("Bank Account with account number:"+utilityPaymentRequest.getAccountNumber()+" not found on the server"));
+
+        validateAccount(bankAccount, utilityPaymentRequest.getAmount());
+
+        UtilityAccountDto utilityAccountDto = utilityAccountService.readUtilityAccount(utilityPaymentRequest.getProviderId());
+
+        bankAccount.setActualBalance(bankAccount.getActualBalance().subtract(utilityPaymentRequest.getAmount()));
+        bankAccount.setAvailableBalance(bankAccount.getAvailableBalance().add(utilityPaymentRequest.getAmount()));
+
+        transactionRepository.save(Transaction.builder()
+                .transactionId(transactionId)
+                .transactionType(TransactionType.UTILITY_PAYMENT)
+                .bankAccount(bankAccount)
+                .referenceNumber(utilityPaymentRequest.getReferenceNumber())
+                .amount(utilityPaymentRequest.getAmount().negate())
+                .build());
+
+        return UtilityPaymentResponse.builder()
+                .transactionId(transactionId)
+                .message("Utility payment successful").build();
     }
 
     private void validateAccount(BankAccount bankAccount, BigDecimal amount) {
