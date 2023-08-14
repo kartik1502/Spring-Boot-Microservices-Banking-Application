@@ -10,7 +10,6 @@ spring:
   application:
     name: api-gateway
 
-
   cloud:
     gateway:
       routes:
@@ -18,4 +17,10 @@ spring:
           uri: lb://core-services
           predicates:
             - Path=/users/**,/bank-accounts/**,/utility-accounts/**,/transactions/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8571/realms/banking-service
 
