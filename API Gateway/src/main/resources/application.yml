@@ -17,6 +17,10 @@ spring:
           uri: lb://core-services
           predicates:
             - Path=/users/**,/bank-accounts/**,/utility-accounts/**,/transactions/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
 
   security:
     oauth2:
