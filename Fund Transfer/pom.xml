@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>2.7.14</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.training</groupId>
@@ -15,7 +15,7 @@
     <description>Fund Transfer</description>
     <properties>
         <java.version>17</java.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
