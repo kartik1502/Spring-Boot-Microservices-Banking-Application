@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.training.user.service.model.Status;
 
 @Data
 @AllArgsConstructor
@@ -20,4 +21,6 @@ public class UserDto {
     private String password;
 
     private String contactNumber;
+
+    private Status status;
 }

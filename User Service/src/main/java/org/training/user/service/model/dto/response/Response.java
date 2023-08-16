@@ -4,21 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.training.user.service.model.Status;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReadUser {
+public class Response {
 
-    private String firstName;
+    private String responseCode;
 
-    private String lastName;
-
-    private String emailId;
-
-    private String contactNumber;
-
-    private Status status;
+    private String responseMessage;
 }

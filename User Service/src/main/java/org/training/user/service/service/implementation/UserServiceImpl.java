@@ -3,12 +3,17 @@ package org.training.user.service.service.implementation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.model.Status;
 import org.training.user.service.model.dto.UserDto;
+import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.response.ReadUser;
+import org.training.user.service.model.dto.response.Response;
 import org.training.user.service.model.entity.User;
 import org.training.user.service.model.mapper.UserMapper;
 import org.training.user.service.repository.UserRepository;
@@ -23,9 +28,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper = new UserMapper();
+
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
+
+    @Value("${spring.application.success}")
+    private String responseCode;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -46,13 +55,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ReadUser> readAllUsers() {
+    public List<ReadUser> readAllUsers(int page, int size) {
 
-        List<UserDto> readUsers =  userMapper.convertToDtoList(userRepository.findAll());
+        Pageable pageable = PageRequest.of(page, size);
+        List<UserDto> readUsers =  userMapper.convertToDtoList(userRepository.findAll(pageable).getContent());
         return readUsers.stream().map(user -> {
             ReadUser readUser = new ReadUser();
             BeanUtils.copyProperties(user, readUser);
             return readUser;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Response updateUser(Long id, UserUpdate userUpdate) {
+
+        userRepository.findById(id).ifPresentOrElse(existingUser -> {
+            existingUser.setStatus(Status.APPROVED);
+            userRepository.save(existingUser); } ,
+                () -> {
+                    log.error("User with id {} not found", id);
+                    throw new ResourceConflictException("User with id " + id + " not found");
+                }
+        );
+        return new Response(responseCode, "User updated successfully");
     }
 }
