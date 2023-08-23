@@ -11,15 +11,19 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-        serverHttpSecurity
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        http
+                .authorizeExchange()
+                //ALLOWING REGISTER API FOR DIRECT ACCESS
+                .pathMatchers("").permitAll()
+                //ALL OTHER APIS ARE AUTHENTICATED
+                .anyExchange().authenticated()
+                .and()
                 .csrf().disable()
-                .authorizeExchange(exchange ->
-                        exchange.pathMatchers("/api/users/register")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated())
-                .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);
-        return serverHttpSecurity.build();
+                .oauth2Login()
+                .and()
+                .oauth2ResourceServer()
+                .jwt();
+        return http.build();
     }
 }

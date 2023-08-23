@@ -1,6 +1,12 @@
 server:
   port: 8080
 
+app:
+  config:
+    keycloak:
+      url: http://localhost:8571
+      realm: banking-service
+
 eureka:
   client:
     service-url:
@@ -28,7 +34,24 @@ spring:
 
   security:
     oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+            authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
+            user-name-attribute: preferred_username
+            user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+            user-info-authentication-method: header
+        registration:
+          banking-service-client:
+            provider: keycloak
+            client-id: banking-service-client
+            client-secret: KYBZiBw5mokTsOVKPzTXDjsBAWUmNfX4
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8571/login/oauth2/code/keycloak
+            scope: openid
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8571/realms/banking-service
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
 
