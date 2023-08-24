@@ -28,5 +28,12 @@ public class KeycloakServiceImpl implements KeycloakService {
         return keyCloakManager.getKeyCloakInstanceWithRealm().users().search(emailId);
     }
 
+    @Override
+    public List<UserRepresentation> readUsers(List<String> authIds) {
 
+        return authIds.stream().map(authId -> {
+            UserResource usersResource = keyCloakManager.getKeyCloakInstanceWithRealm().users().get(authId);
+            return usersResource.toRepresentation();
+        }).collect(Collectors.toList());
+    }
 }

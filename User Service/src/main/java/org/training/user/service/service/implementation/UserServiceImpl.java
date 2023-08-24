@@ -65,5 +65,22 @@ public class UserServiceImpl implements UserService {
         throw new RuntimeException("User with identification number not found");
     }
 
+    @Override
+    public List<UserDto> readAllUsers() {
 
+        List<User> users = userRepository.findAll();
+
+        Map<String, UserRepresentation> userRepresentationMap = keycloakService.readUsers(users.stream().map(user -> user.getAuthId()).collect(Collectors.toList()))
+                .stream().collect(Collectors.toMap(UserRepresentation::getId, Function.identity()));
+
+        System.out.println(userRepresentationMap);
+        return users.stream().map(user -> {
+            UserDto userDto = userMapper.convertToDto(user);
+            UserRepresentation userRepresentation = userRepresentationMap.get(user.getAuthId());
+            userDto.setUserId(user.getUserId());
+            userDto.setEmailId(userRepresentation.getEmail());
+            userDto.setIdentificationNumber(user.getIdentificationNumber());
+            return userDto;
+        }).collect(Collectors.toList());
+    }
 }
