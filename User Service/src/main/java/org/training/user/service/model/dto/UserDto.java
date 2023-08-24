@@ -12,15 +12,15 @@ import org.training.user.service.model.Status;
 @Builder
 public class UserDto {
 
-    private String firstName;
-
-    private String lastName;
+    private Long userId;
 
     private String emailId;
 
     private String password;
 
-    private String contactNumber;
+    private String identificationNumber;
+
+    private String authId;
 
     private Status status;
 }

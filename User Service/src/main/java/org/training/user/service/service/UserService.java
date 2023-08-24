@@ -12,7 +12,5 @@ public interface UserService {
 
     UserDto createUser(UserDto userDto);
 
-    List<ReadUser> readAllUsers(int page, int size);
 
-    Response updateUser(Long id, UserUpdate userUpdate);
 }

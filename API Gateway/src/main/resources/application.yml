@@ -4,7 +4,7 @@ server:
 app:
   config:
     keycloak:
-      url: http://localhost:8571
+      url: http://localhost:8571/
       realm: banking-service
 
 eureka:

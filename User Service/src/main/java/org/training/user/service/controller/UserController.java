@@ -19,17 +19,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity createUser(@RequestBody UserDto userDto) {
-      log.info("Creating user with {}", userDto.toString());
-      return ResponseEntity.ok(userService.createUser(userDto));
+        return ResponseEntity.ok(userService.createUser(userDto));
     }
 
-    @GetMapping
-    public ResponseEntity readAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "1") int size) {
-      return ResponseEntity.ok(userService.readAllUsers(page, size));
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity updateUser(@PathVariable Long id, UserUpdate userUpdate) {
-      return ResponseEntity.ok(userService.updateUser(id, userUpdate));
-    }
+
 }

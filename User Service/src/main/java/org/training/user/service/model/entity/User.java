@@ -19,15 +19,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    private String firstName;
+    private String authId;
 
-    private String lastName;
-
-    private String emailId;
-
-    private String password;
-
-    private String contactNumber;
+    private String identificationNumber;
 
     @Enumerated(EnumType.STRING)
     private Status status;

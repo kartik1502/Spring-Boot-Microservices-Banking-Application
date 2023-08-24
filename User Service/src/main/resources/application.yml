@@ -24,8 +24,8 @@ spring:
 app:
   config:
     keycloak:
-      server-url: http://localhost:8571/auth
+      server-url: http://localhost:8571
       realm: banking-service
-      client-id: banking-api-client
-      client-secret: ZP6nqy716HGcY3CcuIlWbbNub1cDWGBC
+      client-id: banking-service-api-client
+      client-secret: VtuF8ffMabldnrVojuvWhtITX1aZtjtv
 
