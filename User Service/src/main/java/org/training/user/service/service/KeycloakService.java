@@ -13,4 +13,6 @@ public interface KeycloakService {
     List<UserRepresentation> readUsers(List<String> authIds);
 
     UserRepresentation readUser(String authId);
+
+    void updateUser(UserRepresentation userRepresentation);
 }

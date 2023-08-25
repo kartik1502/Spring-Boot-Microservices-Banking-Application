@@ -45,4 +45,11 @@ public class KeycloakServiceImpl implements KeycloakService {
 
         return userResource.get(authId).toRepresentation();
     }
+
+    @Override
+    public void updateUser(UserRepresentation userRepresentation) {
+
+        keyCloakManager.getKeyCloakInstanceWithRealm().users()
+                .get(userRepresentation.getId()).update(userRepresentation);
+    }
 }

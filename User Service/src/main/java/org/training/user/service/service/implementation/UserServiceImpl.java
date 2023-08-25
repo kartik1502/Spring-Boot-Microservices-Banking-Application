@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.exception.ResourceNotFound;
 import org.training.user.service.model.Status;
 import org.training.user.service.model.dto.UserDto;
+import org.training.user.service.model.dto.UserUpdate;
+import org.training.user.service.model.dto.response.Response;
 import org.training.user.service.model.entity.User;
 import org.training.user.service.model.mapper.UserMapper;
 import org.training.user.service.repository.UserRepository;
@@ -31,6 +34,9 @@ public class UserServiceImpl implements UserService {
     private final KeycloakService keycloakService;
 
     private UserMapper userMapper = new UserMapper();
+
+    @Value("${spring.application.success}")
+    private String responseCodeSuccess;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -96,5 +102,25 @@ public class UserServiceImpl implements UserService {
 
         userDto.setEmailId(userRepresentation.getEmail());
         return userDto;
+    }
+
+    @Override
+    public Response updateUserStatus(Long id, UserUpdate userUpdate) {
+
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("User not found on the server"));
+
+        if(userUpdate.getStatus().equals(Status.APPROVED)){
+
+            UserRepresentation userRepresentation = keycloakService.readUser(user.getAuthId());
+            userRepresentation.setEnabled(true);
+            userRepresentation.setEmailVerified(true);
+            keycloakService.updateUser(userRepresentation);
+        }
+        user.setStatus(userUpdate.getStatus());
+        userRepository.save(user);
+        return Response.builder()
+                .responseMessage("User updated successfully")
+                .responseCode(responseCodeSuccess).build();
     }
 }
