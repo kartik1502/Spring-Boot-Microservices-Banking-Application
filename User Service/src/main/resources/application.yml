@@ -7,6 +7,7 @@ spring:
     bad_request: 400
     conflict: 409
     success: 200
+    not_found: 404
 
   datasource:
     url: jdbc:mysql://localhost:3306/user_service

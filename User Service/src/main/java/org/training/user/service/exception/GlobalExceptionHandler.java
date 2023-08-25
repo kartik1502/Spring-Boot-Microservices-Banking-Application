@@ -22,6 +22,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${spring.application.conflict}")
     private String errorCodeConflict;
 
+    @Value("${spring.application.not_found}")
+    private String errorCodeNotFound;
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -32,6 +35,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceConflictException.class)
     public ResponseEntity<Object> handleResourceConflictException(ResourceConflictException ex) {
         return new ResponseEntity<>(new ErrorResponse(errorCodeConflict, Set.of(ex.getLocalizedMessage())), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ResourceNotFound.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
+        return new ResponseEntity<>(new ErrorResponse(errorCodeNotFound, Set.of(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
     }
 
 }

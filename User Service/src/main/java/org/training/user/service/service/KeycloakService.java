@@ -11,4 +11,6 @@ public interface KeycloakService {
     List<UserRepresentation> readUserByEmail(String emailId);
 
     List<UserRepresentation> readUsers(List<String> authIds);
+
+    UserRepresentation readUser(String authId);
 }

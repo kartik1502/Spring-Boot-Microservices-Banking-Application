@@ -6,6 +6,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
+import org.training.user.service.exception.ResourceNotFound;
 import org.training.user.service.model.Status;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.entity.User;
@@ -82,5 +83,18 @@ public class UserServiceImpl implements UserService {
             userDto.setIdentificationNumber(user.getIdentificationNumber());
             return userDto;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto readUser(String authId) {
+
+        User user = userRepository.findUserByAuthId(authId).
+                orElseThrow(() -> new ResourceNotFound("User not found on the server"));
+
+        UserRepresentation userRepresentation = keycloakService.readUser(authId);
+        UserDto userDto = userMapper.convertToDto(user);
+
+        userDto.setEmailId(userRepresentation.getEmail());
+        return userDto;
     }
 }

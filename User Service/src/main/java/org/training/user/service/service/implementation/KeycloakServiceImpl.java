@@ -2,6 +2,7 @@ package org.training.user.service.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 import org.training.user.service.config.KeyCloakManager;
@@ -35,5 +36,13 @@ public class KeycloakServiceImpl implements KeycloakService {
             UserResource usersResource = keyCloakManager.getKeyCloakInstanceWithRealm().users().get(authId);
             return usersResource.toRepresentation();
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserRepresentation readUser(String authId) {
+
+        UsersResource userResource = keyCloakManager.getKeyCloakInstanceWithRealm().users();
+
+        return userResource.get(authId).toRepresentation();
     }
 }

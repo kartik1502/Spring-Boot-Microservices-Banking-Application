@@ -27,4 +27,9 @@ public class UserController {
         return ResponseEntity.ok(userService.readAllUsers());
     }
 
+    @GetMapping("/{authId}")
+    public ResponseEntity<UserDto> readUserByAuthId(@PathVariable String authId) {
+        return ResponseEntity.ok(userService.readUser(authId));
+    }
+
 }

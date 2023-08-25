@@ -13,4 +13,6 @@ public interface UserService {
     UserDto createUser(UserDto userDto);
 
     List<UserDto> readAllUsers();
+
+    UserDto readUser(String  authId);
 }
