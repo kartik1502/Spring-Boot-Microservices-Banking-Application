@@ -14,6 +14,10 @@ public class UserDto {
 
     private Long userId;
 
+    private String firstName;
+
+    private String lastName;
+
     private String emailId;
 
     private String password;
