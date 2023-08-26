@@ -10,7 +10,7 @@ import org.training.core.services.model.dto.UserDto;
 import org.training.core.services.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("core-services/users")
 @RequiredArgsConstructor
 public class UserController {
 
