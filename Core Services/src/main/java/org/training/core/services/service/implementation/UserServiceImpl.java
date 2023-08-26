@@ -29,8 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response createUser(UserDto userDto) {
 
-        User user = userRepository.findUserByIdentificationNumber(userDto.getIdentificationNumber())
-                .orElseThrow(() -> new ResourceConflict("User with same emailId is already registered"));
+        userRepository.findUserByIdentificationNumber(userDto.getIdentificationNumber())
+                .ifPresent(existingUser ->{ throw new ResourceConflict("User with same emailId is already registered");
+                });
 
         userRepository.save(userMapper.convertToEntity(userDto));
         return Response.builder()

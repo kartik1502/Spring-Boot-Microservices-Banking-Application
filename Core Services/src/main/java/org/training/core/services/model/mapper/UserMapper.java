@@ -16,7 +16,9 @@ public class UserMapper extends BaseMapper<User, UserDto> {
         User user = new User();
         if(!Objects.isNull(dto)) {
             BeanUtils.copyProperties(dto, user, "bankAccountDtos");
-            user.setAccounts(bankAccountMapper.covertToEntityList(dto.getBankAccountDtos()));
+            if(!Objects.isNull(dto.getBankAccountDtos())){
+                user.setAccounts(bankAccountMapper.covertToEntityList(dto.getBankAccountDtos()));
+            }
         }
         return user;
     }
