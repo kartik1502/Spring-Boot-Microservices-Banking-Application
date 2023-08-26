@@ -19,6 +19,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${spring.application.bad_request}")
     private String errorCodeBadRequest;
 
+    @Value("${spring.application.conflict}")
+    private String errorCodeConflict;
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -34,5 +37,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InsufficientBalanceException.class)
     public ResponseEntity<ErrorResponse> handleInsufficientBalanceException(InsufficientBalanceException ex, WebRequest request) {
         return new ResponseEntity<>(new ErrorResponse(Set.of(ex.getLocalizedMessage()), errorCodeBadRequest), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceConflict.class)
+    public ResponseEntity<Object> handleResourceConflictException(ResourceConflict ex) {
+        return new ResponseEntity<>(new ErrorResponse(Set.of(ex.getLocalizedMessage()), errorCodeConflict), HttpStatus.CONFLICT);
     }
 }

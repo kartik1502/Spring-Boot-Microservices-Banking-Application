@@ -19,8 +19,6 @@ public class UserDto {
 
     private String lastName;
 
-    private String emailId;
-
     private String identificationNumber;
 
     private List<BankAccountDto> bankAccountDtos;

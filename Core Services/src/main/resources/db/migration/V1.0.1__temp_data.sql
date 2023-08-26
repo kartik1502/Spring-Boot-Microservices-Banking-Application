@@ -1,11 +1,11 @@
-INSERT INTO user (user_id, email_id, first_name, identification_number, last_name)
-VALUES ('1', 'sam@gmail.com', 'Sam', '808829932V', 'Silva');
-INSERT INTO user (user_id, email_id, first_name, identification_number, last_name)
-VALUES ('2', 'guru@gmail.com', 'Guru', '901830556V', 'Darmaraj');
-INSERT INTO user (user_id, email_id, first_name, identification_number, last_name)
-VALUES ('3', 'ragu@gmail.com', 'Ragu', '348829932V', 'Sivaraj');
-INSERT INTO user (user_id, email_id, first_name, identification_number, last_name)
-VALUES ('4', 'randor@gmail.com', 'Randor', '842829932V', 'Manoon');
+INSERT INTO user (user_id, first_name, identification_number, last_name)
+VALUES ('1', 'Sam', '808829932V', 'Silva');
+INSERT INTO user (user_id,  first_name, identification_number, last_name)
+VALUES ('2',  'Guru', '901830556V', 'Darmaraj');
+INSERT INTO user (user_id,  first_name, identification_number, last_name)
+VALUES ('3',  'Ragu', '348829932V', 'Sivaraj');
+INSERT INTO user (user_id,  first_name, identification_number, last_name)
+VALUES ('4', 'Randor', '842829932V', 'Manoon');
 
 INSERT INTO bank_account
 (actual_balance, available_balance, account_number, account_status, account_type, user_id)

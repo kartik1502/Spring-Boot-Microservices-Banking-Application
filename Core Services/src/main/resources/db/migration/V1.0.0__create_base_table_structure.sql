@@ -3,7 +3,6 @@
 CREATE TABLE `user`
 (
     `user_id`                    bigint(20) NOT NULL AUTO_INCREMENT,
-    `email_id`                 varchar(255) DEFAULT NULL,
     `first_name`            varchar(255) DEFAULT NULL,
     `identification_number` varchar(255) DEFAULT NULL,
     `last_name`             varchar(255) DEFAULT NULL,
