@@ -5,11 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.exception.ResourceNotFound;
-import org.training.user.service.external.CoreService;
 import org.training.user.service.model.Status;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
@@ -37,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
-    private final CoreService coreService;
 
     private UserMapper userMapper = new UserMapper();
 
@@ -81,7 +78,6 @@ public class UserServiceImpl implements UserService {
                     .lastName(userDto.getLastName())
                     .identificationNumber(user.getIdentificationNumber()).build();
 
-            ResponseEntity<Response> response = coreService.createUser(userCreate);
             return userMapper.convertToDto(userRepository.save(user));
         }
         throw new RuntimeException("User with identification number not found");
