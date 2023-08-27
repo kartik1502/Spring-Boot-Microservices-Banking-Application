@@ -1,1 +1,19 @@
+spring:
+  application:
+    name: account-service
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/account_service
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081
