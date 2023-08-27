@@ -116,7 +116,8 @@ public class UserServiceImpl implements UserService {
 
         UserRepresentation userRepresentation = keycloakService.readUser(authId);
         UserDto userDto = userMapper.convertToDto(user);
-
+        userDto.setFirstName(userRepresentation.getFirstName());
+        userDto.setLastName(userRepresentation.getLastName());
         userDto.setEmailId(userRepresentation.getEmail());
         return userDto;
     }
