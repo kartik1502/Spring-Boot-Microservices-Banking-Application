@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userService.readAllUsers());
     }
 
-    @GetMapping("/{authId}")
+    @GetMapping("auth/{authId}")
     public ResponseEntity<UserDto> readUserByAuthId(@PathVariable String authId) {
         log.info("reading user by authId");
         return ResponseEntity.ok(userService.readUser(authId));
@@ -43,5 +43,11 @@ public class UserController {
     public ResponseEntity<Response> updateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) {
         log.info("updating the user with: {}", userUpdate.toString());
         return new ResponseEntity<>(userService.updateUserStatus(id, userUpdate), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> readUserById(@PathVariable Long userId) {
+        log.info("reading user by ID");
+        return ResponseEntity.ok(userService.readUserById(userId));
     }
 }

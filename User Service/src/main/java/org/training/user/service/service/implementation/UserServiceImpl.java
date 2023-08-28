@@ -137,4 +137,12 @@ public class UserServiceImpl implements UserService {
                 .responseMessage("User updated successfully")
                 .responseCode(responseCodeSuccess).build();
     }
+
+    @Override
+    public UserDto readUserById(Long userId) {
+
+        return userRepository.findById(userId)
+                .map(user -> userMapper.convertToDto(user))
+                .orElseThrow(() -> new ResourceNotFound("User not found on the server"));
+    }
 }

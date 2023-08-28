@@ -17,4 +17,6 @@ public interface UserService {
     UserDto readUser(String  authId);
 
     Response updateUserStatus(Long id, UserUpdate userUpdate);
+
+    UserDto readUserById(Long userId);
 }
