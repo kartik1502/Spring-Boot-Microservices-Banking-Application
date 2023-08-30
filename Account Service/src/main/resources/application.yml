@@ -1,6 +1,9 @@
 spring:
   application:
     name: account-service
+    bad_request: 400
+    conflict: 409
+    ok: 200
 
   datasource:
     url: jdbc:mysql://localhost:3306/account_service
