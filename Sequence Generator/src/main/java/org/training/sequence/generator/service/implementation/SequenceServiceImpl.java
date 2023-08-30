@@ -18,11 +18,10 @@ public class SequenceServiceImpl implements SequenceService {
     public Sequence create() {
 
         log.info("creating a account number");
-        if(sequenceRepository.countAll() == 0) {
-            sequenceRepository.save(Sequence.builder()
-                    .accountNumber(1L).build());
-        }
-        Sequence sequence = sequenceRepository.findFirstByOrderBySequenceIdDesc();
-        return sequenceRepository.save(Sequence.builder().accountNumber(sequence.getAccountNumber()+1).build());
+        return sequenceRepository.findById(1L)
+                .map(sequence -> {
+                    sequence.setAccountNumber(sequence.getAccountNumber() + 1);
+                    return sequenceRepository.save(sequence);
+                }).orElseGet(() -> sequenceRepository.save(Sequence.builder().accountNumber(1L).build()));
     }
 }
