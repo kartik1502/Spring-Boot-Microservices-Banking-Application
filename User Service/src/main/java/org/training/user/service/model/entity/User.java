@@ -19,10 +19,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    private String emailId;
+
+    private String contactNo;
+
     private String authId;
 
     private String identificationNumber;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToOne
+    @JoinColumn(name = "user_profile_id", referencedColumnName = "userProfileId")
+    private UserProfile userProfile;
 }
