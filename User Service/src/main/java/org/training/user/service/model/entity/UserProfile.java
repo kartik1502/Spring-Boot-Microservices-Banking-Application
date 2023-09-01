@@ -22,7 +22,9 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userProfileId;
 
-    private LocalDate localDate;
+    private String firstName;
+
+    private String lastName;
 
     private String gender;
 

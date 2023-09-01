@@ -1,6 +1,7 @@
 package org.training.user.service.service;
 
 import org.springframework.data.domain.Pageable;
+import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.response.ReadUser;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto createUser(UserDto userDto);
+    Response createUser(CreateUser userDto);
 
     List<UserDto> readAllUsers();
 

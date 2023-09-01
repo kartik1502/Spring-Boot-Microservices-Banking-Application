@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.exception.ResourceNotFound;
 import org.training.user.service.model.Status;
+import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.external.UserCreate;
 import org.training.user.service.model.dto.response.Response;
 import org.training.user.service.model.entity.User;
+import org.training.user.service.model.entity.UserProfile;
 import org.training.user.service.model.mapper.UserMapper;
 import org.training.user.service.repository.UserRepository;
 import org.training.user.service.service.KeycloakService;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     private String responseCodeSuccess;
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public Response createUser(CreateUser userDto) {
 
         List<UserRepresentation> userRepresentations = keycloakService.readUserByEmail(userDto.getEmailId());
         if(userRepresentations.size() > 0) {
@@ -68,17 +70,20 @@ public class UserServiceImpl implements UserService {
         if (userCreationResponse.equals(201)) {
 
             List<UserRepresentation> representations = keycloakService.readUserByEmail(userDto.getEmailId());
-            userDto.setAuthId(representations.get(0).getId());
-            userDto.setStatus(Status.PENDING);
-            userDto.setIdentificationNumber(UUID.randomUUID().toString());
-            User user = userMapper.convertToEntity(userDto);
-            System.out.println(user.getIdentificationNumber());
-            UserCreate userCreate = UserCreate.builder()
+            UserProfile userProfile = UserProfile.builder()
                     .firstName(userDto.getFirstName())
-                    .lastName(userDto.getLastName())
-                    .identificationNumber(user.getIdentificationNumber()).build();
+                    .lastName(userDto.getLastName()).build();
+            User user = User.builder()
+                    .emailId(userDto.getEmailId())
+                    .contactNo(userDto.getContactNumber())
+                    .status(Status.PENDING).userProfile(userProfile)
+                    .authId(representations.get(0).getId())
+                    .identificationNumber(UUID.randomUUID().toString()).build();
 
-            return userMapper.convertToDto(userRepository.save(user));
+            userRepository.save(user);
+            return Response.builder()
+                    .responseMessage("User created successfully")
+                    .responseCode(responseCodeSuccess).build();
         }
         throw new RuntimeException("User with identification number not found");
     }

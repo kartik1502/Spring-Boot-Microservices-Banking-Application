@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.response.Response;
@@ -23,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<Response> createUser(@RequestBody CreateUser userDto) {
         log.info("creating user with: {}", userDto.toString());
         return ResponseEntity.ok(userService.createUser(userDto));
     }
