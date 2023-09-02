@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
+import org.training.user.service.model.dto.UserUpdateStatus;
 import org.training.user.service.model.dto.response.ReadUser;
 import org.training.user.service.model.dto.response.Response;
 
@@ -17,7 +18,9 @@ public interface UserService {
 
     UserDto readUser(String  authId);
 
-    Response updateUserStatus(Long id, UserUpdate userUpdate);
+    Response updateUserStatus(Long id, UserUpdateStatus userUpdate);
+
+    Response updateUser(Long id, UserUpdate userUpdate);
 
     UserDto readUserById(Long userId);
 }

@@ -2,15 +2,14 @@ package org.training.user.service.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
+import org.training.user.service.model.dto.UserUpdateStatus;
 import org.training.user.service.model.dto.response.Response;
-import org.training.user.service.model.entity.User;
 import org.training.user.service.service.UserService;
 
 import java.util.List;
@@ -40,10 +39,15 @@ public class UserController {
         return ResponseEntity.ok(userService.readUser(authId));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Response> updateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response> updateUserStatus(@PathVariable Long id, @RequestBody UserUpdateStatus userUpdate) {
         log.info("updating the user with: {}", userUpdate.toString());
         return new ResponseEntity<>(userService.updateUserStatus(id, userUpdate), HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Response> updateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) {
+        return new ResponseEntity<>(userService.updateUser(id, userUpdate), HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")

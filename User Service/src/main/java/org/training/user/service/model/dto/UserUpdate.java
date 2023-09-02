@@ -4,13 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.training.user.service.model.Status;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UserUpdate {
 
-    private Status status;
+    private String firstName;
+
+    private String lastName;
+
+    private String contactNo;
+
+    private String address;
+
+    private String gender;
+
+    private String occupation;
+
+    private String martialStatus;
+
+    private String nationality;
 }

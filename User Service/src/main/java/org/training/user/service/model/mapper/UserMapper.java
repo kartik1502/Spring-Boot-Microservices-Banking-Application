@@ -1,5 +1,6 @@
 package org.training.user.service.model.mapper;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.entity.User;
@@ -7,6 +8,8 @@ import org.training.user.service.model.entity.User;
 import java.util.Objects;
 
 public class UserMapper extends BaseMapper<User, UserDto>{
+
+    private final ModelMapper mapper = new ModelMapper();
 
     @Override
     public User convertToEntity(UserDto dto, Object... args) {
