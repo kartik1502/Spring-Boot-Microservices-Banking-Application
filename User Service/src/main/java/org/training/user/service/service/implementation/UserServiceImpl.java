@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
             UserProfile userProfile = UserProfile.builder()
                     .firstName(userDto.getFirstName())
                     .lastName(userDto.getLastName()).build();
+
             User user = User.builder()
                     .emailId(userDto.getEmailId())
                     .contactNo(userDto.getContactNumber())
@@ -100,15 +101,12 @@ public class UserServiceImpl implements UserService {
         Map<String, UserRepresentation> userRepresentationMap = keycloakService.readUsers(users.stream().map(user -> user.getAuthId()).collect(Collectors.toList()))
                 .stream().collect(Collectors.toMap(UserRepresentation::getId, Function.identity()));
 
-        System.out.println(userRepresentationMap);
         return users.stream().map(user -> {
             UserDto userDto = userMapper.convertToDto(user);
             UserRepresentation userRepresentation = userRepresentationMap.get(user.getAuthId());
             userDto.setUserId(user.getUserId());
             userDto.setEmailId(userRepresentation.getEmail());
             userDto.setIdentificationNumber(user.getIdentificationNumber());
-            userDto.setFirstName(userRepresentation.getFirstName());
-            userDto.setLastName(userRepresentation.getLastName());
             return userDto;
         }).collect(Collectors.toList());
     }
@@ -121,8 +119,6 @@ public class UserServiceImpl implements UserService {
 
         UserRepresentation userRepresentation = keycloakService.readUser(authId);
         UserDto userDto = userMapper.convertToDto(user);
-        userDto.setFirstName(userRepresentation.getFirstName());
-        userDto.setLastName(userRepresentation.getLastName());
         userDto.setEmailId(userRepresentation.getEmail());
         return userDto;
     }
@@ -134,14 +130,15 @@ public class UserServiceImpl implements UserService {
                 () -> new ResourceNotFound("User not found on the server"));
 
         if(userUpdate.getStatus().equals(Status.APPROVED)){
-
             UserRepresentation userRepresentation = keycloakService.readUser(user.getAuthId());
             userRepresentation.setEnabled(true);
             userRepresentation.setEmailVerified(true);
             keycloakService.updateUser(userRepresentation);
         }
+
         user.setStatus(userUpdate.getStatus());
         userRepository.save(user);
+
         return Response.builder()
                 .responseMessage("User updated successfully")
                 .responseCode(responseCodeSuccess).build();
