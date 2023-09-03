@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Value("${spring.application.bad_request}")
@@ -20,6 +22,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Value("${spring.application.conflict}")
     private String conflict;
+
+    @Value("${spring.application.not_found}")
+    private String notFound;
 
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -32,5 +37,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceConflict.class)
     public ResponseEntity<Object> handleResourceConflictException(ResourceConflict ex) {
         return new ResponseEntity<>(new ErrorResponse(conflict, Set.of(ex.getLocalizedMessage())), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ResourceNotFound.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
+        return new ResponseEntity<>(new ErrorResponse(notFound, Set.of(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
     }
 }

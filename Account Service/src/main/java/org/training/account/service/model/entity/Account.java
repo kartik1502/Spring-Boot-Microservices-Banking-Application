@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.training.account.service.model.AccountStatus;
 import org.training.account.service.model.AccountType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -28,6 +30,9 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
+
+    @CreationTimestamp
+    private LocalDate openingDate;
 
     private BigDecimal availableBalance;
 
