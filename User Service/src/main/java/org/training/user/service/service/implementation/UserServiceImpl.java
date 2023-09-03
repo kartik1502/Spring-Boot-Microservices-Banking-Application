@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.ResourceConflictException;
@@ -39,8 +40,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
-
-    private final ModelMapper mapper = new ModelMapper();
 
     private UserMapper userMapper = new UserMapper();
 
@@ -159,7 +158,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFound("User not found on the server"));
 
         user.setContactNo(userUpdate.getContactNo());
-        mapper.map(userUpdate, user.getUserProfile());
+        BeanUtils.copyProperties(userUpdate, user.getUserProfile());
         userRepository.save(user);
 
         return Response.builder()
