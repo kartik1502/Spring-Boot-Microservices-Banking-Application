@@ -19,8 +19,6 @@ import org.training.account.service.model.mapper.AccountMapper;
 import org.training.account.service.repository.AccountRepository;
 import org.training.account.service.service.AccountService;
 
-import java.math.BigDecimal;
-
 import static org.training.account.service.model.Constants.ACC_PREFIX;
 
 @Slf4j
