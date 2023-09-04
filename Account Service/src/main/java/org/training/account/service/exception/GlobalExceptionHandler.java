@@ -43,4 +43,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
         return new ResponseEntity<>(new ErrorResponse(notFound, Set.of(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InSufficientFunds.class)
+    public ResponseEntity<Object> handleInsufficientFundsException(InSufficientFunds ex) {
+        return new ResponseEntity<>(new ErrorResponse(badRequest, Set.of(ex.getLocalizedMessage())), HttpStatus.BAD_REQUEST);
+    }
 }

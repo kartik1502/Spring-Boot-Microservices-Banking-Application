@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.training.account.service.exception.InSufficientFunds;
 import org.training.account.service.exception.ResourceConflict;
 import org.training.account.service.exception.ResourceNotFound;
 import org.training.account.service.external.SequenceService;
@@ -18,6 +19,8 @@ import org.training.account.service.model.entity.Account;
 import org.training.account.service.model.mapper.AccountMapper;
 import org.training.account.service.repository.AccountRepository;
 import org.training.account.service.service.AccountService;
+
+import java.math.BigDecimal;
 
 import static org.training.account.service.model.Constants.ACC_PREFIX;
 
@@ -50,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountMapper.convertToEntity(accountDto);
         account.setAccountNumber(ACC_PREFIX + String.format("%07d",sequenceService.generateAccountNumber().getAccountNumber()));
         account.setAccountStatus(AccountStatus.PENDING);
-            account.setActualBalance(account.getAvailableBalance());
+        account.setAvailableBalance(BigDecimal.valueOf(0));
         accountRepository.save(account);
         return Response.builder()
                 .responseCode(success)
@@ -62,6 +65,9 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findAccountByAccountNumber(accountNumber)
                 .map(account -> {
+                    if(account.getAvailableBalance().compareTo(BigDecimal.ZERO) >= 0){
+                        throw new InSufficientFunds("Minimum balance of Rs.1000 is required");
+                    }
                     account.setAccountStatus(accountUpdate.getAccountStatus());
                     accountRepository.save(account);
                     return Response.builder().message("Account updated successfully").responseCode(success).build();
