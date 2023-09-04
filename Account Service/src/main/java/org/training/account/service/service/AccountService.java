@@ -9,4 +9,6 @@ public interface AccountService {
     Response createAccount(AccountDto accountDto);
 
     Response updateStatus(String accountNumber, AccountStatusUpdate accountUpdate);
+
+    AccountDto readAccountByAccountNumber(String accountNumber);
 }

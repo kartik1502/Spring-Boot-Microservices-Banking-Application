@@ -27,4 +27,9 @@ public class AccountController {
     public ResponseEntity<Response> updateAccountStatus(@RequestParam String accountNumber,@RequestBody AccountStatusUpdate accountStatusUpdate) {
         return ResponseEntity.ok(accountService.updateStatus(accountNumber, accountStatusUpdate));
     }
+
+    @GetMapping
+    public ResponseEntity<AccountDto> readByAccountNumber(@RequestParam String accountNumber) {
+        return ResponseEntity.ok(accountService.readAccountByAccountNumber(accountNumber));
+    }
 }

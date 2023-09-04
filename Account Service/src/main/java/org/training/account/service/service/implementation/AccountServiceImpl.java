@@ -74,4 +74,12 @@ public class AccountServiceImpl implements AccountService {
                 }).orElseThrow(() -> new ResourceNotFound("Account not on the server"));
 
     }
+
+    @Override
+    public AccountDto readAccountByAccountNumber(String accountNumber) {
+
+        return accountRepository.findAccountByAccountNumber(accountNumber)
+                .map(accountMapper::convertToDto)
+                .orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
+    }
 }

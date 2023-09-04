@@ -25,7 +25,5 @@ public class AccountDto {
 
     private BigDecimal availableBalance;
 
-    private BigDecimal actualBalance;
-
     private Long userId;
 }
