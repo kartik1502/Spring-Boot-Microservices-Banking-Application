@@ -19,9 +19,9 @@ public class AccountDto {
 
     private String accountNumber;
 
-    private AccountType accountType;
+    private String accountType;
 
-    private AccountStatus accountStatus;
+    private String accountStatus;
 
     private BigDecimal availableBalance;
 

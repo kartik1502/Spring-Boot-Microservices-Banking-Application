@@ -11,6 +11,7 @@ import org.training.account.service.exception.ResourceNotFound;
 import org.training.account.service.external.SequenceService;
 import org.training.account.service.external.UserService;
 import org.training.account.service.model.AccountStatus;
+import org.training.account.service.model.AccountType;
 import org.training.account.service.model.dto.AccountDto;
 import org.training.account.service.model.dto.AccountStatusUpdate;
 import org.training.account.service.model.dto.external.UserDto;
@@ -44,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
 
         ResponseEntity<UserDto> user = userService.readUserById(accountDto.getUserId());
 
-        accountRepository.findAccountByUserIdAndAccountType(accountDto.getUserId(), accountDto.getAccountType())
+        accountRepository.findAccountByUserIdAndAccountType(accountDto.getUserId(), AccountType.valueOf(accountDto.getAccountType()))
                 .ifPresent(account -> {
                     log.error("Account already exists on the server");
                     throw new ResourceConflict("Account already exists on the server");
@@ -79,7 +80,12 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto readAccountByAccountNumber(String accountNumber) {
 
         return accountRepository.findAccountByAccountNumber(accountNumber)
-                .map(accountMapper::convertToDto)
+                .map(account -> {
+                    AccountDto accountDto = accountMapper.convertToDto(account);
+                    accountDto.setAccountType(account.getAccountType().toString());
+                    accountDto.setAccountStatus(account.getAccountStatus().toString());
+                    return accountDto;
+                })
                 .orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
     }
 }
