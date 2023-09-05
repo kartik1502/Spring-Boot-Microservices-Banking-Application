@@ -2,6 +2,7 @@ package org.training.account.service.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -87,5 +88,19 @@ public class AccountServiceImpl implements AccountService {
                     return accountDto;
                 })
                 .orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
+    }
+
+    @Override
+    public Response updateAccount(String accountNumber, AccountDto accountDto) {
+
+        return accountRepository.findAccountByAccountNumber(accountDto.getAccountNumber())
+                .map(account -> {
+                    System.out.println(accountDto);
+                    BeanUtils.copyProperties(accountDto, account);
+                    accountRepository.save(account);
+                    return Response.builder()
+                            .responseCode(success)
+                            .message("Account updated successfully").build();
+                }).orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
     }
 }

@@ -32,4 +32,9 @@ public class AccountController {
     public ResponseEntity<AccountDto> readByAccountNumber(@RequestParam String accountNumber) {
         return ResponseEntity.ok(accountService.readAccountByAccountNumber(accountNumber));
     }
+
+    @PutMapping
+    public ResponseEntity<Response> updateAccount(@RequestParam String accountNumber, @RequestBody AccountDto accountDto) {
+        return ResponseEntity.ok(accountService.updateAccount(accountNumber, accountDto));
+    }
 }

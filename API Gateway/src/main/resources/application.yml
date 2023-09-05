@@ -19,10 +19,6 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: core-services
-          uri: lb://core-services
-          predicates:
-            - Path=/users/**,/bank-accounts/**,/utility-accounts/**,/transactions/**
         - id: user-service
           uri: lb://user-service
           predicates:
@@ -39,6 +35,10 @@ spring:
           uri: lb://sequence-generator
           predicates:
             - Path=/sequence/**
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transactions/**
 
   security:
     oauth2:

@@ -11,4 +11,6 @@ public interface AccountService {
     Response updateStatus(String accountNumber, AccountStatusUpdate accountUpdate);
 
     AccountDto readAccountByAccountNumber(String accountNumber);
+
+    Response updateAccount(String accountNumber, AccountDto accountDto);
 }
