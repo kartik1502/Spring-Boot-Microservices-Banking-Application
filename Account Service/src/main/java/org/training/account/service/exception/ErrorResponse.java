@@ -13,5 +13,5 @@ public class ErrorResponse {
 
     private String errorCode;
 
-    private Set<String> errorMessage;
+    private String errorMessage;
 }

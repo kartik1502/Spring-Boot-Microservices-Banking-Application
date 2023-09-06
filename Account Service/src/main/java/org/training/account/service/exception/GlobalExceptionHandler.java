@@ -30,22 +30,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Set<String> errors = ex.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toSet());
-        return new ResponseEntity<>(new ErrorResponse(badRequest, errors), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(badRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceConflict.class)
     public ResponseEntity<Object> handleResourceConflictException(ResourceConflict ex) {
-        return new ResponseEntity<>(new ErrorResponse(conflict, Set.of(ex.getLocalizedMessage())), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ErrorResponse(conflict, ex.getLocalizedMessage()), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ResourceNotFound.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
-        return new ResponseEntity<>(new ErrorResponse(notFound, Set.of(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse(notFound, ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InSufficientFunds.class)
     public ResponseEntity<Object> handleInsufficientFundsException(InSufficientFunds ex) {
-        return new ResponseEntity<>(new ErrorResponse(badRequest, Set.of(ex.getLocalizedMessage())), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(badRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 }
