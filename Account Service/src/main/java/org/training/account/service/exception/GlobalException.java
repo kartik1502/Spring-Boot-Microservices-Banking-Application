@@ -1,17 +1,21 @@
 package org.training.account.service.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ErrorResponse {
+public class GlobalException extends RuntimeException{
 
     private String errorCode;
 
-    private String message;
+    private String errorMessage;
+
+    public GlobalException(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }

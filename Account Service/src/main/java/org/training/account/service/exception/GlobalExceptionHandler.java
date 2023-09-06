@@ -33,18 +33,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(badRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResourceConflict.class)
-    public ResponseEntity<Object> handleResourceConflictException(ResourceConflict ex) {
-        return new ResponseEntity<>(new ErrorResponse(conflict, ex.getLocalizedMessage()), HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
-        return new ResponseEntity<>(new ErrorResponse(notFound, ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(InSufficientFunds.class)
-    public ResponseEntity<Object> handleInsufficientFundsException(InSufficientFunds ex) {
-        return new ResponseEntity<>(new ErrorResponse(badRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(GlobalException.class)
+    public ResponseEntity<Object> handleGlobalException(GlobalException globalException) {
+        return ResponseEntity
+                .badRequest()
+                .body(ErrorResponse.builder()
+                        .errorCode(globalException.getErrorCode())
+                        .message(globalException.getErrorMessage())
+                        .build());
     }
 }

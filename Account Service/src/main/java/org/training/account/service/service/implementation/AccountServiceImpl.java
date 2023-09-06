@@ -87,7 +87,7 @@ public class AccountServiceImpl implements AccountService {
                     accountDto.setAccountStatus(account.getAccountStatus().toString());
                     return accountDto;
                 })
-                .orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
+                .orElseThrow(ResourceNotFound::new);
     }
 
     @Override

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.training.transactions.exception.GlobalErrorCode;
+import org.training.transactions.exception.ResourceNotFound;
 import org.training.transactions.external.AccountService;
 import org.training.transactions.model.TransactionStatus;
 import org.training.transactions.model.TransactionType;
@@ -35,8 +37,10 @@ public class TransactionServiceImpl implements TransactionService {
     public Response addTransaction(TransactionDto transactionDto) {
 
         ResponseEntity<Account> response = accountService.readByAccountNumber(transactionDto.getAccountId());
+        if (response.getBody() != null){
+            throw new ResourceNotFound("Requested account not found on the server", GlobalErrorCode.NOT_FOUND);
+        }
         Account account = response.getBody();
-
         Transaction transaction = transactionMapper.convertToEntity(transactionDto);
         if(transactionDto.getTransactionType().equals(TransactionType.DEPOSIT)) {
             account.setAvailableBalance(account.getAvailableBalance().add(transactionDto.getAmount()));
