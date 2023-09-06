@@ -37,4 +37,9 @@ public class AccountController {
     public ResponseEntity<Response> updateAccount(@RequestParam String accountNumber, @RequestBody AccountDto accountDto) {
         return ResponseEntity.ok(accountService.updateAccount(accountNumber, accountDto));
     }
+
+    @GetMapping("/balance")
+    public ResponseEntity<String> accountBalance(@RequestParam String accountNumber) {
+        return ResponseEntity.ok(accountService.getBalance(accountNumber));
+    }
 }

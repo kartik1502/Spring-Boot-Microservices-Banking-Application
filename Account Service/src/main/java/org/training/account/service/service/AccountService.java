@@ -13,4 +13,6 @@ public interface AccountService {
     AccountDto readAccountByAccountNumber(String accountNumber);
 
     Response updateAccount(String accountNumber, AccountDto accountDto);
+
+    String getBalance(String accountNumber);
 }

@@ -23,6 +23,7 @@ import org.training.account.service.repository.AccountRepository;
 import org.training.account.service.service.AccountService;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static org.training.account.service.model.Constants.ACC_PREFIX;
 
@@ -45,6 +46,9 @@ public class AccountServiceImpl implements AccountService {
     public Response createAccount(AccountDto accountDto) {
 
         ResponseEntity<UserDto> user = userService.readUserById(accountDto.getUserId());
+        if (Objects.isNull(user.getBody())) {
+            throw new ResourceNotFound();
+        }
 
         accountRepository.findAccountByUserIdAndAccountType(accountDto.getUserId(), AccountType.valueOf(accountDto.getAccountType()))
                 .ifPresent(account -> {
@@ -102,5 +106,13 @@ public class AccountServiceImpl implements AccountService {
                             .responseCode(success)
                             .message("Account updated successfully").build();
                 }).orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
+    }
+
+    @Override
+    public String getBalance(String accountNumber) {
+
+        return accountRepository.findAccountByAccountNumber(accountNumber)
+                .map(account -> account.getAvailableBalance().toString())
+                .orElseThrow(ResourceNotFound::new);
     }
 }
