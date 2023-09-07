@@ -60,10 +60,11 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountNumber(ACC_PREFIX + String.format("%07d",sequenceService.generateAccountNumber().getAccountNumber()));
         account.setAccountStatus(AccountStatus.PENDING);
         account.setAvailableBalance(BigDecimal.valueOf(0));
+        account.setAccountType(AccountType.valueOf(accountDto.getAccountType()));
         accountRepository.save(account);
         return Response.builder()
                 .responseCode(success)
-                .message(account.getAccountType().toString()+" Account created successfully").build();
+                .message(" Account created successfully").build();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findAccountByAccountNumber(accountNumber)
                 .map(account -> {
-                    if(account.getAvailableBalance().compareTo(BigDecimal.ZERO) >= 0){
+                    if(account.getAvailableBalance().compareTo(BigDecimal.ZERO) < 0 || account.getAvailableBalance().compareTo(BigDecimal.valueOf(1000)) < 0){
                         throw new InSufficientFunds("Minimum balance of Rs.1000 is required");
                     }
                     account.setAccountStatus(accountUpdate.getAccountStatus());
