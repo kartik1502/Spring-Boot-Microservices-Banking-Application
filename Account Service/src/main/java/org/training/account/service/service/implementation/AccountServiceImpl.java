@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
         ResponseEntity<UserDto> user = userService.readUserById(accountDto.getUserId());
         if (Objects.isNull(user.getBody())) {
-            throw new ResourceNotFound();
+            throw new ResourceNotFound("user not found on the server");
         }
 
         accountRepository.findAccountByUserIdAndAccountType(accountDto.getUserId(), AccountType.valueOf(accountDto.getAccountType()))
