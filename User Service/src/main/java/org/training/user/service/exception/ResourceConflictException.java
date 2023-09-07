@@ -1,6 +1,6 @@
 package org.training.user.service.exception;
 
-public class ResourceConflictException extends RuntimeException{
+public class ResourceConflictException extends GlobalException{
 
     /**
      * Constructs a new runtime exception with {@code null} as its

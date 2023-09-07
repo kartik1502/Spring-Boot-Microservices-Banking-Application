@@ -21,8 +21,9 @@ public class FeignClientErrorDecoder implements ErrorDecoder {
 
         GlobalException globalException = extractGlobalException(response);
 
+        log.info("response status: "+response.status());
         switch (response.status()) {
-            case 404 -> {
+            case 400 -> {
                 log.error("Error in request went through feign client: {}" , globalException.getErrorMessage() + " - " +globalException.getErrorCode());
                 return globalException;
             }
@@ -41,9 +42,11 @@ public class FeignClientErrorDecoder implements ErrorDecoder {
         try {
             reader = response.body().asReader(StandardCharsets.UTF_8);
             String result = IOUtils.toString(reader);
+            log.error(result);
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             globalException = mapper.readValue(result, GlobalException.class);
+            log.error(globalException.toString());
         } catch (IOException e) {
             log.error("IO Exception while reading exception message", e);
         } finally {

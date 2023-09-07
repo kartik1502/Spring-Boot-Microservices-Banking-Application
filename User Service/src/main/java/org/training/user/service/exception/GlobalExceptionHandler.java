@@ -29,18 +29,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Set<String> errors = ex.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toSet());
-        return new ResponseEntity<>(new ErrorResponse(errorCodeBadRequest, errors), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(errorCodeBadRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResourceConflictException.class)
-    public ResponseEntity<Object> handleResourceConflictException(ResourceConflictException ex) {
-        return new ResponseEntity<>(new ErrorResponse(errorCodeConflict, Set.of(ex.getLocalizedMessage())), HttpStatus.CONFLICT);
-    }
+    @ExceptionHandler(GlobalException.class)
+    public ResponseEntity<Object> handleGlobalException(GlobalException globalException) {
 
-    @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFound ex) {
-        return new ResponseEntity<>(new ErrorResponse(errorCodeNotFound, Set.of(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
+        return ResponseEntity
+                .badRequest()
+                .body(ErrorResponse.builder()
+                        .errorMessage(globalException.getMessage())
+                        .errorCode(globalException.getErrorCode())
+                        .build());
     }
 
 }
