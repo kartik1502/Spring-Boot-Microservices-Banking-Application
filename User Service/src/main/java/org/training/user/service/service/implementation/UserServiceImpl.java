@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.training.user.service.exception.EmptyFields;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.exception.ResourceNotFound;
 import org.training.user.service.model.Status;
@@ -15,7 +15,6 @@ import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.UserUpdateStatus;
-import org.training.user.service.model.dto.external.UserCreate;
 import org.training.user.service.model.dto.response.Response;
 import org.training.user.service.model.entity.User;
 import org.training.user.service.model.entity.UserProfile;
@@ -23,6 +22,7 @@ import org.training.user.service.model.mapper.UserMapper;
 import org.training.user.service.repository.UserRepository;
 import org.training.user.service.service.KeycloakService;
 import org.training.user.service.service.UserService;
+import org.training.user.service.utils.FieldChecker;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Value("${spring.application.success}")
     private String responseCodeSuccess;
+
+    @Value("${spring.application.not_found}")
+    private String responseCodeNotFound;
 
     @Override
     public Response createUser(CreateUser userDto) {
@@ -127,6 +130,11 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("User not found on the server"));
+
+        if (FieldChecker.hasEmptyFields(user)) {
+            log.error("User is not updated completely");
+            throw new EmptyFields("please updated the user", responseCodeNotFound);
+        }
 
         if(userUpdate.getStatus().equals(Status.APPROVED)){
             UserRepresentation userRepresentation = keycloakService.readUser(user.getAuthId());
