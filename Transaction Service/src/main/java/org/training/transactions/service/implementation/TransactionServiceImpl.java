@@ -53,7 +53,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setReferenceId(UUID.randomUUID().toString());
 
         ResponseEntity<Response> accountResponse = accountService.updateAccount(transactionDto.getAccountId(), account);
-        System.out.println(accountResponse.getBody().getMessage());
         transactionRepository.save(transaction);
 
         return Response.builder()
