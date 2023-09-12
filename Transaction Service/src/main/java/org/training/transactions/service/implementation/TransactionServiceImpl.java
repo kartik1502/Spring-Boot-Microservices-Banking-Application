@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setReferenceId(UUID.randomUUID().toString());
 
-        ResponseEntity<Response> accountResponse = accountService.updateAccount(transactionDto.getAccountId(), account);
+        accountService.updateAccount(transactionDto.getAccountId(), account);
         transactionRepository.save(transaction);
 
         return Response.builder()
