@@ -43,11 +43,11 @@ public class TransactionServiceImpl implements TransactionService {
         }
         Account account = response.getBody();
         Transaction transaction = transactionMapper.convertToEntity(transactionDto);
-        if(transactionDto.getTransactionType().equals(TransactionType.DEPOSIT)) {
+        if(transactionDto.getTransactionType().equals(TransactionType.DEPOSIT.toString())) {
             account.setAvailableBalance(account.getAvailableBalance().add(transactionDto.getAmount()));
         }
 
-        System.out.println(account);
+        transaction.setTransactionType(TransactionType.valueOf(transactionDto.getTransactionType()));
         transaction.setComments(transactionDto.getDescription());
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setReferenceId(UUID.randomUUID().toString());
