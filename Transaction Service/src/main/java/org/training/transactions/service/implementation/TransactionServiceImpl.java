@@ -18,6 +18,7 @@ import org.training.transactions.model.response.Response;
 import org.training.transactions.repository.TransactionRepository;
 import org.training.transactions.service.TransactionService;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Response addTransaction(TransactionDto transactionDto) {
 
         ResponseEntity<Account> response = accountService.readByAccountNumber(transactionDto.getAccountId());
-        if (response.getBody() != null){
+        if (Objects.isNull(response.getBody())){
             throw new ResourceNotFound("Requested account not found on the server", GlobalErrorCode.NOT_FOUND);
         }
         Account account = response.getBody();

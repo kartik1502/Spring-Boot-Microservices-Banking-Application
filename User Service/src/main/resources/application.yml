@@ -28,5 +28,5 @@ app:
       server-url: http://localhost:8571
       realm: banking-service
       client-id: banking-service-api-client
-      client-secret: VtuF8ffMabldnrVojuvWhtITX1aZtjtv
+      client-secret: 932OFITe8vtH4z0G9gem4Afd69JhbwrI
 
