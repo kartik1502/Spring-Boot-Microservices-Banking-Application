@@ -25,7 +25,7 @@ public class TransactionController {
     }
 
     @PostMapping("/internal")
-    public ResponseEntity<Response> makeInternalTransaction(List<TransactionDto> transactionDtos) {
-        return new ResponseEntity<>(transactionService.internalTransaction(transactionDtos), HttpStatus.CREATED);
+    public ResponseEntity<Response> makeInternalTransaction(@RequestBody List<TransactionDto> transactionDtos,@RequestParam String transactionReference) {
+        return new ResponseEntity<>(transactionService.internalTransaction(transactionDtos, transactionReference), HttpStatus.CREATED);
     }
 }

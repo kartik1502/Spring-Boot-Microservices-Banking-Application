@@ -76,13 +76,17 @@ public class TransactionServiceImpl implements TransactionService {
      * @return a response indicating the completion of the transaction
      */
     @Override
-    public Response internalTransaction(List<TransactionDto> transactionDtos) {
+    public Response internalTransaction(List<TransactionDto> transactionDtos, String transactionReference) {
 
         // Convert the list of transaction DTOs to entities
         List<Transaction> transactions = transactionMapper.convertToEntityList(transactionDtos);
 
         // Update the status of each transaction to 'COMPLETED'
-        transactions.forEach(transaction -> transaction.setStatus(TransactionStatus.COMPLETED));
+        transactions.forEach(transaction -> {
+            transaction.setTransactionType(TransactionType.INTERNAL_TRANSFER);
+            transaction.setStatus(TransactionStatus.COMPLETED);
+            transaction.setReferenceId(transactionReference);
+        });
 
         // Save all the completed transactions to the transaction repository
         transactionRepository.saveAll(transactions);

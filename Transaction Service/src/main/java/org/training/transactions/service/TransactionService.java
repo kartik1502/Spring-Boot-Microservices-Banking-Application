@@ -9,5 +9,5 @@ public interface TransactionService {
 
     Response addTransaction(TransactionDto transactionDto);
 
-    Response internalTransaction(List<TransactionDto> transactionDtos);
+    Response internalTransaction(List<TransactionDto> transactionDtos, String transactionReference);
 }
