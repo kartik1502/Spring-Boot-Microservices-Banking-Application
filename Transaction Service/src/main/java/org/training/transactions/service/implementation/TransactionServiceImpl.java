@@ -18,6 +18,7 @@ import org.training.transactions.model.response.Response;
 import org.training.transactions.repository.TransactionRepository;
 import org.training.transactions.service.TransactionService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,6 +35,13 @@ public class TransactionServiceImpl implements TransactionService {
     @Value("${spring.application.ok}")
     private String ok;
 
+    /**
+     * Adds a transaction to the system.
+     *
+     * @param transactionDto The transaction data transfer object.
+     * @return The response object.
+     * @throws ResourceNotFound If the requested account is not found.
+     */
     @Override
     public Response addTransaction(TransactionDto transactionDto) {
 
@@ -58,5 +66,30 @@ public class TransactionServiceImpl implements TransactionService {
         return Response.builder()
                 .message("Transaction completed successfully")
                 .responseCode(ok).build();
+    }
+
+    /**
+     * Completes the internal transaction by updating the status of each transaction
+     * and saving them to the transaction repository.
+     *
+     * @param transactionDtos the list of transaction DTOs to be processed
+     * @return a response indicating the completion of the transaction
+     */
+    @Override
+    public Response internalTransaction(List<TransactionDto> transactionDtos) {
+
+        // Convert the list of transaction DTOs to entities
+        List<Transaction> transactions = transactionMapper.convertToEntityList(transactionDtos);
+
+        // Update the status of each transaction to 'COMPLETED'
+        transactions.forEach(transaction -> transaction.setStatus(TransactionStatus.COMPLETED));
+
+        // Save all the completed transactions to the transaction repository
+        transactionRepository.saveAll(transactions);
+
+        // Return the response indicating the completion of the transaction
+        return Response.builder()
+                .responseCode(ok)
+                .message("Transaction completed successfully").build();
     }
 }
