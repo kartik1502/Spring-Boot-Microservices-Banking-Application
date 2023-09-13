@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.training.fundtransfer.model.TransactionStatus;
+import org.training.fundtransfer.model.TransferType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -30,4 +33,10 @@ public class FundTransfer {
 
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private TransferType transferType;
+
+    @CreationTimestamp
+    private LocalDateTime transferredOn;
 }

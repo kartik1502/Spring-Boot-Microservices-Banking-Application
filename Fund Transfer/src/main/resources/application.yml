@@ -1,9 +1,11 @@
 server:
-  port: 8083
+  port: 8085
 
 spring:
   application:
     name: fund-transfer-service
+    bad_request: 400
+    ok: 200
 
   datasource:
     url: jdbc:mysql://localhost:3306/fund_transfer_service

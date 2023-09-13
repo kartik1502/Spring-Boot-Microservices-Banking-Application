@@ -9,6 +9,4 @@ import java.util.List;
 public interface FundTransferService {
 
     FundTransferResponse fundTransfer(FundTransferRequest fundTransferRequest);
-
-    List<FundTransferDto> readAllTransfers(int page, int size);
 }
