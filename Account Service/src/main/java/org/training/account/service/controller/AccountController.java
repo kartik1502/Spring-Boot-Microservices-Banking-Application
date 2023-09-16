@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.training.account.service.model.dto.AccountDto;
 import org.training.account.service.model.dto.AccountStatusUpdate;
 import org.training.account.service.model.dto.response.Response;
+import org.training.account.service.model.response.TransactionResponse;
 import org.training.account.service.service.AccountService;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,5 +44,10 @@ public class AccountController {
     @GetMapping("/balance")
     public ResponseEntity<String> accountBalance(@RequestParam String accountNumber) {
         return ResponseEntity.ok(accountService.getBalance(accountNumber));
+    }
+
+    @GetMapping("/{accountId}/transactions")
+    public ResponseEntity<List<TransactionResponse>> getTransactionsFromAccountId(@PathVariable String accountId) {
+        return ResponseEntity.ok(accountService.getTransactionsFromAccountId(accountId));
     }
 }

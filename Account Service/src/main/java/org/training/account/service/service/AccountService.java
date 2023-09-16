@@ -3,6 +3,9 @@ package org.training.account.service.service;
 import org.training.account.service.model.dto.AccountDto;
 import org.training.account.service.model.dto.AccountStatusUpdate;
 import org.training.account.service.model.dto.response.Response;
+import org.training.account.service.model.response.TransactionResponse;
+
+import java.util.List;
 
 public interface AccountService {
 
@@ -15,4 +18,6 @@ public interface AccountService {
     Response updateAccount(String accountNumber, AccountDto accountDto);
 
     String getBalance(String accountNumber);
+
+    List<TransactionResponse> getTransactionsFromAccountId(String accountId);
 }

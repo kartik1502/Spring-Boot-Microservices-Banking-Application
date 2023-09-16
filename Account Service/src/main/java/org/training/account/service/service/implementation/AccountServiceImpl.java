@@ -10,6 +10,7 @@ import org.training.account.service.exception.InSufficientFunds;
 import org.training.account.service.exception.ResourceConflict;
 import org.training.account.service.exception.ResourceNotFound;
 import org.training.account.service.external.SequenceService;
+import org.training.account.service.external.TransactionService;
 import org.training.account.service.external.UserService;
 import org.training.account.service.model.AccountStatus;
 import org.training.account.service.model.AccountType;
@@ -19,10 +20,12 @@ import org.training.account.service.model.dto.external.UserDto;
 import org.training.account.service.model.dto.response.Response;
 import org.training.account.service.model.entity.Account;
 import org.training.account.service.model.mapper.AccountMapper;
+import org.training.account.service.model.response.TransactionResponse;
 import org.training.account.service.repository.AccountRepository;
 import org.training.account.service.service.AccountService;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 import static org.training.account.service.model.Constants.ACC_PREFIX;
@@ -35,6 +38,7 @@ public class AccountServiceImpl implements AccountService {
     private final UserService userService;
     private final AccountRepository accountRepository;
     private final SequenceService sequenceService;
+    private final TransactionService transactionService;
 
     private final AccountMapper accountMapper = new AccountMapper();
 
@@ -115,5 +119,11 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAccountByAccountNumber(accountNumber)
                 .map(account -> account.getAvailableBalance().toString())
                 .orElseThrow(ResourceNotFound::new);
+    }
+
+    @Override
+    public List<TransactionResponse> getTransactionsFromAccountId(String accountId) {
+
+        return transactionService.getTransactionsFromAccountId(accountId);
     }
 }
