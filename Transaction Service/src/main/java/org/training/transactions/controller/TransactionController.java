@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.training.transactions.model.dto.TransactionDto;
 import org.training.transactions.model.response.Response;
+import org.training.transactions.model.response.TransactionRequest;
 import org.training.transactions.service.TransactionService;
 
 import java.util.List;
@@ -27,5 +28,10 @@ public class TransactionController {
     @PostMapping("/internal")
     public ResponseEntity<Response> makeInternalTransaction(@RequestBody List<TransactionDto> transactionDtos,@RequestParam String transactionReference) {
         return new ResponseEntity<>(transactionService.internalTransaction(transactionDtos, transactionReference), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TransactionRequest>> getTransactions(@RequestParam String accountId) {
+        return new ResponseEntity<>(transactionService.getTransaction(accountId), HttpStatus.OK);
     }
 }

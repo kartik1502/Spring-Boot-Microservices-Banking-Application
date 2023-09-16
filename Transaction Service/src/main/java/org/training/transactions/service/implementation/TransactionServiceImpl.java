@@ -2,6 +2,7 @@ package org.training.transactions.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,14 @@ import org.training.transactions.model.entity.Transaction;
 import org.training.transactions.model.external.Account;
 import org.training.transactions.model.mapper.TransactionMapper;
 import org.training.transactions.model.response.Response;
+import org.training.transactions.model.response.TransactionRequest;
 import org.training.transactions.repository.TransactionRepository;
 import org.training.transactions.service.TransactionService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -95,5 +98,25 @@ public class TransactionServiceImpl implements TransactionService {
         return Response.builder()
                 .responseCode(ok)
                 .message("Transaction completed successfully").build();
+    }
+
+    /**
+     * Retrieves a list of transaction requests for a given account ID.
+     *
+     * @param accountId the ID of the account
+     * @return a list of transaction requests
+     */
+    @Override
+    public List<TransactionRequest> getTransaction(String accountId) {
+
+        return transactionRepository.findTransactionByAccountId(accountId)
+                .stream().map(transaction -> {
+                    TransactionRequest transactionRequest = new TransactionRequest();
+                    BeanUtils.copyProperties(transaction, transactionRequest);
+                    transactionRequest.setTransactionStatus(transaction.getStatus().toString());
+                    transactionRequest.setLocalDateTime(transaction.getTransactionDate());
+                    transactionRequest.setTransactionType(transaction.getTransactionType().toString());
+                    return transactionRequest;
+                }).collect(Collectors.toList());
     }
 }
