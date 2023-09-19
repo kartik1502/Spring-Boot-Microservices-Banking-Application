@@ -124,4 +124,24 @@ public class TransactionServiceImpl implements TransactionService {
                     return transactionRequest;
                 }).collect(Collectors.toList());
     }
+
+    /**
+     * Retrieves a list of TransactionRequests based on a transaction reference.
+     *
+     * @param transactionReference The reference ID of the transaction
+     * @return List of TransactionRequests matching the transaction reference
+     */
+    @Override
+    public List<TransactionRequest> getTransactionByTransactionReference(String transactionReference) {
+
+        return transactionRepository.findTransactionByReferenceId(transactionReference)
+                .stream().map(transaction -> {
+                    TransactionRequest transactionRequest = new TransactionRequest();
+                    BeanUtils.copyProperties(transaction, transactionRequest);
+                    transactionRequest.setTransactionStatus(transaction.getStatus().toString());
+                    transactionRequest.setLocalDateTime(transaction.getTransactionDate());
+                    transactionRequest.setTransactionType(transaction.getTransactionType().toString());
+                    return transactionRequest;
+                }).collect(Collectors.toList());
+    }
 }

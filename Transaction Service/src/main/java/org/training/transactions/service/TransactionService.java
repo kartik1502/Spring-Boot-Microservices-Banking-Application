@@ -13,4 +13,6 @@ public interface TransactionService {
     Response internalTransaction(List<TransactionDto> transactionDtos, String transactionReference);
 
     List<TransactionRequest> getTransaction(String accountId);
+
+    List<TransactionRequest> getTransactionByTransactionReference(String transactionReference);
 }

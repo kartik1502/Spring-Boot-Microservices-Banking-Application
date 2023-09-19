@@ -34,4 +34,9 @@ public class TransactionController {
     public ResponseEntity<List<TransactionRequest>> getTransactions(@RequestParam String accountId) {
         return new ResponseEntity<>(transactionService.getTransaction(accountId), HttpStatus.OK);
     }
+
+    @GetMapping("/{referenceId}")
+    public ResponseEntity<List<TransactionRequest>> getTransactionByTransactionReference(@PathVariable String referenceId) {
+        return new ResponseEntity<>(transactionService.getTransactionByTransactionReference(referenceId), HttpStatus.OK);
+    }
 }
