@@ -9,6 +9,8 @@ import org.training.fundtransfer.model.dto.request.FundTransferRequest;
 import org.training.fundtransfer.model.dto.response.FundTransferResponse;
 import org.training.fundtransfer.service.FundTransferService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/fund-transfers")
@@ -24,5 +26,10 @@ public class FundTransferController {
     @GetMapping("/{referenceId}")
     public ResponseEntity<FundTransferDto> getTransferDetailsFromReferenceId(@PathVariable String referenceId) {
         return new ResponseEntity<>(fundTransferService.getTransferDetailsFromReferenceId(referenceId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FundTransferDto>> getAllTransfersByAccountId(@RequestParam String accountId) {
+        return new ResponseEntity<>(fundTransferService.getAllTransfersByAccountId(accountId), HttpStatus.OK);
     }
 }

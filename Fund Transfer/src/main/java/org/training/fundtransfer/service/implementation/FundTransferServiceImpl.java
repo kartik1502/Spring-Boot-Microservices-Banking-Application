@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -121,5 +122,11 @@ public class FundTransferServiceImpl implements FundTransferService {
         return fundTransferRepository.findFundTransferByTransactionReference(referenceId)
                 .map(fundTransferMapper::convertToDto)
                 .orElseThrow(() -> new ResourceNotFound("Fund transfer not found", GlobalErrorCode.NOT_FOUND));
+    }
+
+    @Override
+    public List<FundTransferDto> getAllTransfersByAccountId(String accountId) {
+
+        return fundTransferMapper.convertToDtoList(fundTransferRepository.findFundTransferByFromAccount(accountId));
     }
 }
