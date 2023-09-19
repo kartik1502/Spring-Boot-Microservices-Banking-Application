@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.training.transactions.exception.AccountStatusException;
 import org.training.transactions.exception.GlobalErrorCode;
 import org.training.transactions.exception.ResourceNotFound;
 import org.training.transactions.external.AccountService;
@@ -53,6 +54,10 @@ public class TransactionServiceImpl implements TransactionService {
             throw new ResourceNotFound("Requested account not found on the server", GlobalErrorCode.NOT_FOUND);
         }
         Account account = response.getBody();
+        if (!account.getAccountStatus().equals("APPROVED")){
+            log.error("Account is inactive or closed");
+            throw new AccountStatusException("account is inactive or closed");
+        }
         Transaction transaction = transactionMapper.convertToEntity(transactionDto);
         if(transactionDto.getTransactionType().equals(TransactionType.DEPOSIT.toString())) {
             account.setAvailableBalance(account.getAvailableBalance().add(transactionDto.getAmount()));
