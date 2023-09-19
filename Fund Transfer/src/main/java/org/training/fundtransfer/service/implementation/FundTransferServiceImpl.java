@@ -15,6 +15,7 @@ import org.training.fundtransfer.mapper.FundTransferMapper;
 import org.training.fundtransfer.model.TransactionStatus;
 import org.training.fundtransfer.model.TransferType;
 import org.training.fundtransfer.model.dto.Account;
+import org.training.fundtransfer.model.dto.FundTransferDto;
 import org.training.fundtransfer.model.dto.Transaction;
 import org.training.fundtransfer.model.dto.request.FundTransferRequest;
 import org.training.fundtransfer.model.dto.response.FundTransferResponse;
@@ -105,5 +106,20 @@ public class FundTransferServiceImpl implements FundTransferService {
         String transactionReference = UUID.randomUUID().toString();
         transactionService.makeInternalTransactions(transactions, transactionReference);
         return transactionReference;
+    }
+
+    /**
+     * Retrieves the details of a fund transfer based on the given reference ID.
+     *
+     * @param referenceId The reference ID of the fund transfer.
+     * @return The FundTransferDto containing the details of the fund transfer.
+     * @throws ResourceNotFound if the fund transfer is not found.
+     */
+    @Override
+    public FundTransferDto getTransferDetailsFromReferenceId(String referenceId) {
+
+        return fundTransferRepository.findFundTransferByTransactionReference(referenceId)
+                .map(fundTransferMapper::convertToDto)
+                .orElseThrow(() -> new ResourceNotFound("Fund transfer not found", GlobalErrorCode.NOT_FOUND));
     }
 }

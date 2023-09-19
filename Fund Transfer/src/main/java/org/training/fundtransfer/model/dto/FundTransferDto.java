@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.training.fundtransfer.model.TransactionStatus;
+import org.training.fundtransfer.model.TransferType;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +25,8 @@ public class FundTransferDto {
     private BigDecimal amount;
 
     private TransactionStatus status;
+
+    private TransferType transferType;
+
+    private LocalDateTime transferredOn;
 }
