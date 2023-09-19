@@ -50,4 +50,9 @@ public class AccountController {
     public ResponseEntity<List<TransactionResponse>> getTransactionsFromAccountId(@PathVariable String accountId) {
         return ResponseEntity.ok(accountService.getTransactionsFromAccountId(accountId));
     }
+
+    @PutMapping("/closure")
+    public ResponseEntity<Response> closeAccount(@RequestParam String accountNumber) {
+        return ResponseEntity.ok(accountService.closeAccount(accountNumber));
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.training.account.service.exception.AccountClosingException;
 import org.training.account.service.exception.InSufficientFunds;
 import org.training.account.service.exception.ResourceConflict;
 import org.training.account.service.exception.ResourceNotFound;
@@ -125,5 +126,21 @@ public class AccountServiceImpl implements AccountService {
     public List<TransactionResponse> getTransactionsFromAccountId(String accountId) {
 
         return transactionService.getTransactionsFromAccountId(accountId);
+    }
+
+    @Override
+    public Response closeAccount(String accountNumber) {
+
+        return accountRepository.findAccountByAccountNumber(accountNumber)
+                .map(account -> {
+                    if(BigDecimal.valueOf(Double.parseDouble(getBalance(accountNumber))).compareTo(BigDecimal.ZERO) != 0) {
+                        throw new AccountClosingException("Balance should be zero");
+                    }
+                    account.setAccountStatus(AccountStatus.CLOSED);
+                    return Response.builder()
+                            .message("Account closed successfully").message(success)
+                            .build();
+                }).orElseThrow(ResourceNotFound::new);
+
     }
 }

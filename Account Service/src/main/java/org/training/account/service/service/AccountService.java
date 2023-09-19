@@ -20,4 +20,6 @@ public interface AccountService {
     String getBalance(String accountNumber);
 
     List<TransactionResponse> getTransactionsFromAccountId(String accountId);
+
+    Response closeAccount(String accountNumber);
 }
