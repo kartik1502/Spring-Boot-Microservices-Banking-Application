@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.training.transactions.exception.AccountStatusException;
 import org.training.transactions.exception.GlobalErrorCode;
+import org.training.transactions.exception.InsufficientBalance;
 import org.training.transactions.exception.ResourceNotFound;
 import org.training.transactions.external.AccountService;
 import org.training.transactions.model.TransactionStatus;
@@ -40,11 +41,13 @@ public class TransactionServiceImpl implements TransactionService {
     private String ok;
 
     /**
-     * Adds a transaction to the system.
+     * Adds a transaction based on the provided TransactionDto.
      *
-     * @param transactionDto The transaction data transfer object.
-     * @return The response object.
-     * @throws ResourceNotFound If the requested account is not found.
+     * @param  transactionDto  the TransactionDto object containing the transaction details
+     * @return                 a Response object indicating the success of the transaction
+     * @throws ResourceNotFound     if the requested account is not found on the server
+     * @throws AccountStatusException     if the account is inactive or closed
+     * @throws InsufficientBalance     if there is insufficient balance in the account
      */
     @Override
     public Response addTransaction(TransactionDto transactionDto) {
@@ -54,13 +57,20 @@ public class TransactionServiceImpl implements TransactionService {
             throw new ResourceNotFound("Requested account not found on the server", GlobalErrorCode.NOT_FOUND);
         }
         Account account = response.getBody();
-        if (!account.getAccountStatus().equals("APPROVED")){
-            log.error("Account is inactive or closed");
-            throw new AccountStatusException("account is inactive or closed");
-        }
         Transaction transaction = transactionMapper.convertToEntity(transactionDto);
         if(transactionDto.getTransactionType().equals(TransactionType.DEPOSIT.toString())) {
             account.setAvailableBalance(account.getAvailableBalance().add(transactionDto.getAmount()));
+        } else if (transactionDto.getTransactionType().equals(TransactionType.WITHDRAWAL.toString())) {
+            if(!account.getAccountStatus().equals("ACTIVE")){
+                log.error("account is either inactive/closed, cannot process the transaction");
+                throw new AccountStatusException("account is inactive or closed");
+            }
+            if(account.getAvailableBalance().compareTo(transactionDto.getAmount()) < 0){
+                log.error("insufficient balance in the account");
+                throw new InsufficientBalance("Insufficient balance in the account");
+            }
+            transaction.setAmount(transactionDto.getAmount().negate());
+            account.setAvailableBalance(account.getAvailableBalance().subtract(transactionDto.getAmount()));
         }
 
         transaction.setTransactionType(TransactionType.valueOf(transactionDto.getTransactionType()));
