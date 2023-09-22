@@ -21,4 +21,6 @@ public interface UserService {
     Response updateUser(Long id, UserUpdate userUpdate);
 
     UserDto readUserById(Long userId);
+
+    UserDto readUserByAccountId(String accountId);
 }

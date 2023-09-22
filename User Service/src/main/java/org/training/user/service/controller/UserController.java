@@ -55,4 +55,9 @@ public class UserController {
         log.info("reading user by ID");
         return ResponseEntity.ok(userService.readUserById(userId));
     }
+
+    @GetMapping("/accounts/{accountId}")
+    public ResponseEntity<UserDto> readUserByAccountId(@PathVariable String accountId) {
+        return ResponseEntity.ok(userService.readUserByAccountId(accountId));
+    }
 }

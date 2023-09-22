@@ -6,10 +6,12 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.training.user.service.exception.EmptyFields;
 import org.training.user.service.exception.ResourceConflictException;
 import org.training.user.service.exception.ResourceNotFound;
+import org.training.user.service.external.AccountService;
 import org.training.user.service.model.Status;
 import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
@@ -18,6 +20,7 @@ import org.training.user.service.model.dto.UserUpdateStatus;
 import org.training.user.service.model.dto.response.Response;
 import org.training.user.service.model.entity.User;
 import org.training.user.service.model.entity.UserProfile;
+import org.training.user.service.model.external.Account;
 import org.training.user.service.model.mapper.UserMapper;
 import org.training.user.service.repository.UserRepository;
 import org.training.user.service.service.KeycloakService;
@@ -25,10 +28,7 @@ import org.training.user.service.service.UserService;
 import org.training.user.service.utils.FieldChecker;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
+    private final AccountService accountService;
 
     private UserMapper userMapper = new UserMapper();
 
@@ -172,5 +173,18 @@ public class UserServiceImpl implements UserService {
         return Response.builder()
                 .responseCode(responseCodeSuccess)
                 .responseMessage("user updated successfully").build();
+    }
+
+    @Override
+    public UserDto readUserByAccountId(String accountId) {
+
+        ResponseEntity<Account> response = accountService.readByAccountNumber(accountId);
+        if(Objects.isNull(response.getBody())){
+            throw new ResourceNotFound("account not found on the server");
+        }
+        Long userId = response.getBody().getUserId();
+        return userRepository.findById(userId)
+                .map(user -> userMapper.convertToDto(user))
+                .orElseThrow(() -> new ResourceNotFound("User not found on the server"));
     }
 }
