@@ -22,4 +22,6 @@ public interface AccountService {
     List<TransactionResponse> getTransactionsFromAccountId(String accountId);
 
     Response closeAccount(String accountNumber);
+
+    AccountDto readAccountByUserId(Long userId);
 }

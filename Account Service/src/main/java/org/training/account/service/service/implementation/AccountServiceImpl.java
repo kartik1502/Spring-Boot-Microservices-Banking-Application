@@ -149,4 +149,19 @@ public class AccountServiceImpl implements AccountService {
                 }).orElseThrow(ResourceNotFound::new);
 
     }
+
+    @Override
+    public AccountDto readAccountByUserId(Long userId) {
+
+        return accountRepository.findAccountByUserId(userId)
+                .map(account ->{
+                    if(!account.getAccountStatus().equals(AccountStatus.ACTIVE)){
+                        throw new AccountStatusException("Account is inactive/closed");
+                    }
+                    AccountDto accountDto = accountMapper.convertToDto(account);
+                    accountDto.setAccountStatus(account.getAccountStatus().toString());
+                    accountDto.setAccountType(account.getAccountType().toString());
+                    return accountDto;
+                }).orElseThrow(ResourceNotFound::new);
+    }
 }

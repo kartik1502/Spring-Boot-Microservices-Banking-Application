@@ -55,4 +55,20 @@ public class AccountController {
     public ResponseEntity<Response> closeAccount(@RequestParam String accountNumber) {
         return ResponseEntity.ok(accountService.closeAccount(accountNumber));
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<AccountDto> readAccountByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok(accountService.readAccountByUserId(userId));
+
+
+
+
+
+
+
+
+
+
+
+    }
 }
