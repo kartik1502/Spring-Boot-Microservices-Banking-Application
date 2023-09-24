@@ -50,6 +50,14 @@ public class UserServiceImpl implements UserService {
     @Value("${spring.application.not_found}")
     private String responseCodeNotFound;
 
+    /**
+     * Creates a new user.
+     *
+     * @param userDto The user data transfer object containing user information.
+     * @return A response indicating the result of the user creation.
+     * @throws ResourceConflictException If the emailId is already registered as a user.
+     * @throws RuntimeException If the user with identification number is not found.
+     */
     @Override
     public Response createUser(CreateUser userDto) {
 
@@ -96,6 +104,11 @@ public class UserServiceImpl implements UserService {
         throw new RuntimeException("User with identification number not found");
     }
 
+    /**
+     * Retrieves all users and their corresponding details.
+     *
+     * @return a list of UserDto objects containing the user information
+     */
     @Override
     public List<UserDto> readAllUsers() {
 
@@ -114,6 +127,13 @@ public class UserServiceImpl implements UserService {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * Reads a user from the database using the provided authId.
+     *
+     * @param authId the authentication id of the user
+     * @return the UserDto object representing the user
+     * @throws ResourceNotFound if the user is not found on the server
+     */
     @Override
     public UserDto readUser(String authId) {
 
@@ -126,6 +146,15 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    /**
+     * Updates the status of a user.
+     *
+     * @param id The ID of the user.
+     * @param userUpdate The updated user status.
+     * @return The response indicating the success of the update.
+     * @throws ResourceNotFound If the user is not found.
+     * @throws EmptyFields If the user has empty fields.
+     */
     @Override
     public Response updateUserStatus(Long id, UserUpdateStatus userUpdate) {
 
@@ -152,6 +181,13 @@ public class UserServiceImpl implements UserService {
                 .responseCode(responseCodeSuccess).build();
     }
 
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param userId the ID of the user to retrieve
+     * @return the UserDto object representing the user
+     * @throws ResourceNotFound if the user is not found
+     */
     @Override
     public UserDto readUserById(Long userId) {
 
@@ -160,6 +196,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFound("User not found on the server"));
     }
 
+    /**
+     * Updates a user with the given ID.
+     *
+     * @param id The ID of the user to update.
+     * @param userUpdate The updated information for the user.
+     * @return The response indicating the success or failure of the update operation.
+     * @throws ResourceNotFound if the user with the given ID is not found.
+     */
     @Override
     public Response updateUser(Long id, UserUpdate userUpdate) {
 
@@ -175,6 +219,13 @@ public class UserServiceImpl implements UserService {
                 .responseMessage("user updated successfully").build();
     }
 
+    /**
+     * Retrieves a UserDto by the given accountId.
+     *
+     * @param accountId The account ID of the user.
+     * @return The UserDto object corresponding to the given accountId.
+     * @throws ResourceNotFound If the account or user is not found on the server.
+     */
     @Override
     public UserDto readUserByAccountId(String accountId) {
 

@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 public class FieldChecker {
 
+    /**
+     * Checks if an object has empty fields.
+     *
+     * @param object the object to check
+     * @return true if the object has empty fields, false otherwise
+     */
     public static boolean hasEmptyFields(Object object) {
 
         if (object == null){
