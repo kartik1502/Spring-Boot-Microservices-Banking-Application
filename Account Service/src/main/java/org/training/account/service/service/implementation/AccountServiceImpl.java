@@ -110,9 +110,6 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findAccountByAccountNumber(accountNumber)
                 .map(account -> {
-                    if(!account.getAccountStatus().equals(AccountStatus.ACTIVE)){
-                        throw new AccountStatusException("Account is inactive/closed");
-                    }
                     AccountDto accountDto = accountMapper.convertToDto(account);
                     accountDto.setAccountType(account.getAccountType().toString());
                     accountDto.setAccountStatus(account.getAccountStatus().toString());
@@ -135,9 +132,6 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findAccountByAccountNumber(accountDto.getAccountNumber())
                 .map(account -> {
-                    if(!account.getAccountStatus().equals(AccountStatus.ACTIVE)){
-                        throw new AccountStatusException("Account is inactive/closed");
-                    }
                     System.out.println(accountDto);
                     BeanUtils.copyProperties(accountDto, account);
                     accountRepository.save(account);

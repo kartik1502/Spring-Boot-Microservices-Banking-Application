@@ -62,7 +62,7 @@ public class FundTransferServiceImpl implements FundTransferService {
             throw new ResourceNotFound("requested account not found on the server", GlobalErrorCode.NOT_FOUND);
         }
         fromAccount = response.getBody();
-        if (!fromAccount.getAccountStatus().equals("APPROVED")) {
+        if (!fromAccount.getAccountStatus().equals("ACTIVE")) {
             log.error("account status is pending or inactive, please update the account status");
             throw new AccountUpdateException("account is status is :pending", GlobalErrorCode.NOT_ACCEPTABLE);
         }
