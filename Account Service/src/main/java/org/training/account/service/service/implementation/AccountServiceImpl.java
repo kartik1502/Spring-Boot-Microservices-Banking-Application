@@ -44,6 +44,14 @@ public class AccountServiceImpl implements AccountService {
     @Value("${spring.application.ok}")
     private String success;
 
+    /**
+     * Creates an account based on the provided accountDto.
+     *
+     * @param accountDto The accountDto containing the necessary information to create an account.
+     * @return The response indicating the result of the account creation.
+     * @throws ResourceNotFound   If the user associated with the accountDto does not exist.
+     * @throws ResourceConflict   If an account with the same userId and accountType already exists.
+     */
     @Override
     public Response createAccount(AccountDto accountDto) {
 
@@ -69,6 +77,16 @@ public class AccountServiceImpl implements AccountService {
                 .message(" Account created successfully").build();
     }
 
+    /**
+     * Updates the status of an account.
+     *
+     * @param accountNumber The account number of the account to update.
+     * @param accountUpdate The account status update object.
+     * @return The response indicating the result of the update.
+     * @throws AccountStatusException   If the account is inactive or closed.
+     * @throws InSufficientFunds       If the account balance is below the minimum required balance.
+     * @throws ResourceNotFound        If the account could not be found.
+     */
     @Override
     public Response updateStatus(String accountNumber, AccountStatusUpdate accountUpdate) {
 
@@ -103,6 +121,15 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(ResourceNotFound::new);
     }
 
+    /**
+     * Updates an account with the provided account number and account DTO.
+     *
+     * @param accountNumber The account number of the account to be updated.
+     * @param accountDto    The account DTO containing the updated account information.
+     * @return A response indicating the success or failure of the account update.
+     * @throws AccountStatusException If the account is inactive or closed.
+     * @throws ResourceNotFound      If the account is not found on the server.
+     */
     @Override
     public Response updateAccount(String accountNumber, AccountDto accountDto) {
 
@@ -120,6 +147,13 @@ public class AccountServiceImpl implements AccountService {
                 }).orElseThrow(() -> new ResourceNotFound("Account not found on the server"));
     }
 
+    /**
+     * Retrieves the balance for a given account number.
+     *
+     * @param accountNumber The account number to retrieve the balance for.
+     * @return The balance of the account as a string.
+     * @throws ResourceNotFound if the account with the given account number is not found.
+     */
     @Override
     public String getBalance(String accountNumber) {
 
@@ -128,12 +162,26 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(ResourceNotFound::new);
     }
 
+    /**
+     * Retrieves a list of transaction responses from the given account ID.
+     *
+     * @param accountId The ID of the account to retrieve transactions from
+     * @return A list of transaction responses
+     */
     @Override
     public List<TransactionResponse> getTransactionsFromAccountId(String accountId) {
 
         return transactionService.getTransactionsFromAccountId(accountId);
     }
 
+    /**
+     * Closes the account with the specified account number.
+     *
+     * @param accountNumber The account number of the account to be closed.
+     * @return A response indicating the result of the operation.
+     * @throws ResourceNotFound If the account with the specified account number is not found.
+     * @throws AccountClosingException If the balance of the account is not zero.
+     */
     @Override
     public Response closeAccount(String accountNumber) {
 
@@ -150,6 +198,14 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    /**
+     * Read the account details for a given user ID.
+     *
+     * @param userId the ID of the user
+     * @return the account details as an AccountDto object
+     * @throws ResourceNotFound if no account is found for the user
+     * @throws AccountStatusException if the account is inactive or closed
+     */
     @Override
     public AccountDto readAccountByUserId(Long userId) {
 

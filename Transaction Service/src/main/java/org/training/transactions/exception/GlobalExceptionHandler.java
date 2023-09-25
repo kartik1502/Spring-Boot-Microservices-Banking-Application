@@ -10,6 +10,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /**
+     * Handles global exceptions and returns a ResponseEntity with an ErrorResponse.
+     *
+     * @param globalException The global exception to handle.
+     * @return A ResponseEntity containing the error response.
+     */
+
     @ExceptionHandler(GlobalException.class)
     public ResponseEntity<Object> handleGlobalException(GlobalException globalException) {
 

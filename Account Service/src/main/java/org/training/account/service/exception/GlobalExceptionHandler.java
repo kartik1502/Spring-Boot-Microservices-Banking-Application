@@ -26,6 +26,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${spring.application.not_found}")
     private String notFound;
 
+    /**
+     * Handles the case when a method argument is not valid.
+     *
+     * @param ex      The MethodArgumentNotValidException that occurred.
+     * @param headers The HttpHeaders of the response.
+     * @param status  The HttpStatus of the response.
+     * @param request The WebRequest of the response.
+     * @return A ResponseEntity with an ErrorResponse and HttpStatus.BAD_REQUEST.
+     */
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -33,6 +42,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(badRequest, ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Exception handler for GlobalException.
+     *
+     * @param globalException The GlobalException to handle.
+     * @return The ResponseEntity with the error response.
+     */
     @ExceptionHandler(GlobalException.class)
     public ResponseEntity<Object> handleGlobalException(GlobalException globalException) {
         return ResponseEntity

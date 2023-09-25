@@ -13,9 +13,22 @@ import org.training.fundtransfer.model.dto.response.Response;
 @FeignClient(name = "account-service", configuration = FeignClientConfiguration.class)
 public interface AccountService {
 
+    /**
+     * Retrieves an account by account number.
+     *
+     * @param accountNumber The account number to search for.
+     * @return The account matching the account number.
+     */
     @GetMapping("/accounts")
     ResponseEntity<Account> readByAccountNumber(@RequestParam String accountNumber);
 
+    /**
+     * Updates an account with the given account number.
+     *
+     * @param accountNumber The account number of the account to be updated.
+     * @param account The updated account details.
+     * @return The response entity containing the response.
+     */
     @PutMapping("/accounts")
     ResponseEntity<Response> updateAccount(@RequestParam String accountNumber, @RequestBody Account account);
 }

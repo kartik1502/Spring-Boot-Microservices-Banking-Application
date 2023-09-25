@@ -16,6 +16,13 @@ import java.util.Objects;
 @Slf4j
 public class FeignClientErrorDecoder implements ErrorDecoder {
 
+    /**
+     * Decode the response and return an Exception object.
+     *
+     * @param s        the response string
+     * @param response the HTTP response object
+     * @return an Exception object representing the decoded response
+     */
     @Override
     public Exception decode(String s, Response response) {
 
@@ -34,6 +41,12 @@ public class FeignClientErrorDecoder implements ErrorDecoder {
         }
     }
 
+    /**
+     * Extracts a GlobalException object from the response.
+     *
+     * @param response The response object containing the exception information
+     * @return The GlobalException object extracted from the response, or null if extraction fails
+     */
     private GlobalException extractGlobalException(Response response) {
 
         GlobalException globalException = null;

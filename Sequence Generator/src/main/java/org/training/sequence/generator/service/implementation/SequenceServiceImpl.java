@@ -14,6 +14,11 @@ public class SequenceServiceImpl implements SequenceService {
 
     private final SequenceRepository sequenceRepository;
 
+    /**
+     * Create a new account number.
+     *
+     * @return The newly created account number.
+     */
     @Override
     public Sequence create() {
 

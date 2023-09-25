@@ -11,6 +11,12 @@ import java.util.List;
 @FeignClient(name = "transaction-service", configuration = FeignClientConfiguration.class)
 public interface TransactionService {
 
+    /**
+     * Retrieves a list of transactions from the specified account ID.
+     *
+     * @param accountId the ID of the account
+     * @return a list of transaction responses
+     */
     @GetMapping("/transactions")
     List<TransactionResponse> getTransactionsFromAccountId(@RequestParam String accountId);
 }

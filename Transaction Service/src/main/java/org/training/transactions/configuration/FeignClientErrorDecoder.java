@@ -15,6 +15,13 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class FeignClientErrorDecoder implements ErrorDecoder {
 
+    /**
+     * Decodes the response and returns an Exception based on the status code.
+     *
+     * @param s        The string representation of the response.
+     * @param response The HTTP response.
+     * @return An Exception based on the status code.
+     */
     @Override
     public Exception decode(String s, Response response) {
 
@@ -30,6 +37,12 @@ public class FeignClientErrorDecoder implements ErrorDecoder {
         }
     }
 
+    /**
+     * Extracts a GlobalException object from the response body.
+     *
+     * @param response the response object
+     * @return the GlobalException object extracted from the response body
+     */
     private GlobalException extractGlobalException(Response response) {
 
         GlobalException globalException = null;
