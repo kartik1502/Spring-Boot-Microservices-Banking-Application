@@ -65,11 +65,19 @@ To get started with this Spring Boot Microservices Banking Application, follow t
 ---
 
 <h2 align="center">📖 Documentation</h2>
+<h3>📖 API Documentation</h3>
 
 For detailed API documentation and usage instructions
 
 You can access the comprehensive [API Documentation](https://app.theneo.io/student/spring-boot-microservices-banking-application) in one place for a unified view of the entire banking application.
 
+<h3>📚 Java Documentation (JavaDocs)</h3>
+
+The JavaDocs for all services together are available online for your convenience:
+
+- **Java Documentation:** [Java Documentation](https://kartik1502.github.io/Spring-Boot-Microservices-Banking-Application/)
+
+You can click on the link above to access the combined JavaDocs for all microservices. These JavaDocs provide detailed information about the classes, methods, and variables used in each microservice, making it easier for developers to understand and work with the codebase across all services.
 
 ---
 
