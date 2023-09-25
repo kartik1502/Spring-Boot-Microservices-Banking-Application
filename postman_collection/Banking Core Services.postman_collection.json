@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "eb226ab6-3552-4727-b99a-f3a5800c7a7f",
+		"name": "Banking Core Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13046684"
+	},
+	"item": [
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "User Service",
+					"item": [
+						{
+							"name": "create a user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\" : \"Adam\",\r\n    \"lastName\" : \"Sanadi\",\r\n    \"emailId\" : \"adamsanadi1234@gmail.com\",\r\n    \"contactNumber\" : \"8547159267\",\r\n    \"password\" : \"Adam@1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read all users",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user status",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : \"APPROVED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\" : \"Kishan\",\r\n    \"lastName\" : \"Kulkarni\",\r\n    \"contactNo\" : \"9562148579\",\r\n    \"address\" : \"Behind Prasad Lodge, Extension Masari\",\r\n    \"gender\" : \"Male\",\r\n    \"occupation\" : \"Student\",\r\n    \"martialStatus\" : \"Single\",\r\n    \"nationality\" : \"Indian\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user by account id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users/accounts/0600140000005",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"accounts",
+										"0600140000005"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fund Transfer Service",
+					"item": [
+						{
+							"name": "fund transfer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fromAccount\" : \"0600140000001\",\r\n    \"toAccount\" : \"0600140000002\",\r\n    \"amount\" : \"500\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/fund-transfers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"fund-transfers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get details of transfer from reference id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/fund-transfers/950e07f5-09ce-4fee-be66-3377233458ad",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"fund-transfers",
+										"950e07f5-09ce-4fee-be66-3377233458ad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get fund transfer details that are made from an account",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/fund-transfers?accountId=0600140000002",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"fund-transfers"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "0600140000002"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account Service",
+					"item": [
+						{
+							"name": "create Account",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountType\" : \"SAVINGS_ACCOUNT\",\r\n    \"userId\" : \"3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/accounts",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update account status",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountStatus\" : \"ACTIVE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/accounts?accountNumber=0600140000002",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0600140000002"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read account by account number",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/accounts?accountNumber=0600140000001",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0600140000001"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get transactions from account Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/accounts/0600140000001/transactions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts",
+										"0600140000001",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "closing account",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/accounts/closure?accountNumber=0600140000001",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts",
+										"closure"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "0600140000001"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read account details from user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/accounts/8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"accounts",
+										"8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sequence Generator",
+					"item": [
+						{
+							"name": "generate account number",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/sequence",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sequence"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transaction Service",
+					"item": [
+						{
+							"name": "make transactions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\" : \"0600140000001\",\r\n    \"transactionType\" : \"WITHDRAWAL\",\r\n    \"amount\" : \"200\",\r\n    \"description\" : \"200 has successfully debited from account\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/transactions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get transaction from account Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/transactions?accountId=0600140000001",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "0600140000001"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get transaction details from reference number",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/transactions/0671cbe4-fefb-4a60-9e55-93bfb1d5895c",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"transactions",
+										"0671cbe4-fefb-4a60-9e55-93bfb1d5895c"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "clientSecret",
+						"value": "Au6eAD2JgB5MH0G2tNrPLfKqObswfSPb",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "{{keycloak_client_password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{keycloak_client_username}}",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid offline_access",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "banking-service-client",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "http://localhost:8571/realms/banking-service/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "keycloak_host",
+			"value": "http://localhost:8571"
+		},
+		{
+			"key": "keycloak_client_id",
+			"value": "banking-service-client"
+		},
+		{
+			"key": "keycloak_client_secret",
+			"value": "qqoSqqmLMHhcx9L3QjfBI1vxDDFugmct"
+		},
+		{
+			"key": "keycloak_client_username",
+			"value": "super-user"
+		},
+		{
+			"key": "keycloak_client_password",
+			"value": "Ka3k@1411"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	]
+}
