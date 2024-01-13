@@ -11,7 +11,7 @@ import org.training.fundtransfer.exception.InsufficientBalance;
 import org.training.fundtransfer.exception.ResourceNotFound;
 import org.training.fundtransfer.external.AccountService;
 import org.training.fundtransfer.external.TransactionService;
-import org.training.fundtransfer.mapper.FundTransferMapper;
+import org.training.fundtransfer.model.mapper.FundTransferMapper;
 import org.training.fundtransfer.model.TransactionStatus;
 import org.training.fundtransfer.model.TransferType;
 import org.training.fundtransfer.model.dto.Account;
@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

@@ -18,7 +18,7 @@ import org.training.account.service.model.dto.external.UserDto;
 import org.training.account.service.model.dto.response.Response;
 import org.training.account.service.model.entity.Account;
 import org.training.account.service.model.mapper.AccountMapper;
-import org.training.account.service.model.response.TransactionResponse;
+import org.training.account.service.model.dto.external.TransactionResponse;
 import org.training.account.service.repository.AccountRepository;
 import org.training.account.service.service.AccountService;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.training.account.service.model.dto.AccountDto;
 import org.training.account.service.model.dto.AccountStatusUpdate;
 import org.training.account.service.model.dto.response.Response;
-import org.training.account.service.model.response.TransactionResponse;
+import org.training.account.service.model.dto.external.TransactionResponse;
 import org.training.account.service.service.AccountService;
 
 import java.util.List;
