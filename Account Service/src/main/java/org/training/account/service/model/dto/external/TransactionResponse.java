@@ -1,4 +1,4 @@
-package org.training.account.service.model.response;
+package org.training.account.service.model.dto.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
