@@ -132,7 +132,6 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findAccountByAccountNumber(accountDto.getAccountNumber())
                 .map(account -> {
-                    System.out.println(accountDto);
                     BeanUtils.copyProperties(accountDto, account);
                     accountRepository.save(account);
                     return Response.builder()
