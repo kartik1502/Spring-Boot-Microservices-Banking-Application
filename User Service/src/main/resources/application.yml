@@ -10,9 +10,9 @@ spring:
     not_found: 404
 
   datasource:
-    url: jdbc:mysql://localhost:3306/user_service
-    username: root
-    password: root
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_NAME:user_service}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root}
   jpa:
     hibernate:
       ddl-auto: update
