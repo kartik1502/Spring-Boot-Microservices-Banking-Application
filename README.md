@@ -1,14 +1,10 @@
 <h1 align="center">🌟 Spring-Boot-Microservices-Banking-Application 🌟</h1>
 
-<p align="center">
-  Welcome to the Spring Boot Microservices Banking Application! This project showcases a robust banking system built using Spring Boot microservices.
-</p>
-
 <h2 align="center">📋 Table of Contents</h2>
 
-- [🚀 Functionalities](#-functionalities)
-  - [🔍 Service Registry](#-service-registry)
-  - [🌐 API Gateway](#-api-gateway)
+- [🔍 About](#-about)
+- [🏛️ Architecture](#-architecture)
+- [🚀 Microservices](#-microservices)
   - [👤 User Service](#-user-service)
   - [💼 Account Service](#-account-service)
   - [💸 Fund Transfer Service](#-fund-transfer-service)
@@ -17,9 +13,22 @@
 - [📖 Documentation](#-documentation)
 - [🤝 Contribution](#-contribution)
 
+## 🔍 About
+<p>
+    The Banking Application is built using a microservices architecture, incorporating the Spring Boot framework along with other Spring technologies such as Spring Data JPA, Spring Cloud, and Spring Security, alongside tools like Maven for dependency management. These technologies play a crucial role in establishing essential components like Service Registry, API Gateway, and more.<br><br>
+    Moreover, they enable us to develop independent microservices such as the user service for user management, the account service for account generation and other related functionalities, the fund transfer service for various transfer operations, and the transaction service for viewing transactions and facilitating withdrawals and deposits. These technologies not only streamline development but also enhance scalability and maintainability, ensuring a robust and efficient banking system.
+</p>
+
 ---
 
-<h2 align="center">🚀 Functionalities</h2>
+## 🏛️ Architecture
+
+- **Service Registry:** The microservices uses the discovery service for service registration and service discovery, this helps the microservices to discovery and communicate with other services, without needing to hardcode the endpoints while communicating with other microservices.
+
+- **API Gateway:** This microservices uses the API gateway to centralize the API endpoint, where all the endpoints have common entry point to all the endpoints. The API Gateway also facilitates the Security inclusion where the Authorization and Authentication for the Application.
+
+
+<h2>🚀 Microservices</h2>
 
 ### 🔍 Service Registry
 - Manages microservices for easy discovery and registration.
@@ -53,7 +62,7 @@
 
 ---
 
-<h2 align="center">🚀 Getting Started</h2>
+<h2>🚀 Getting Started</h2>
 
 To get started with this Spring Boot Microservices Banking Application, follow these steps:
 
@@ -64,7 +73,7 @@ To get started with this Spring Boot Microservices Banking Application, follow t
 
 ---
 
-<h2 align="center">📖 Documentation</h2>
+<h2>📖 Documentation</h2>
 <h3>📖 API Documentation</h3>
 
 For detailed API documentation and usage instructions
@@ -81,7 +90,7 @@ You can click on the link above to access the combined JavaDocs for all microser
 
 ---
 
-<h2 align="center">🤝 Contribution</h2>
+<h2>🤝 Contribution</h2>
 
 Contributions to this project are welcome! Feel free to open issues, submit pull requests, or provide feedback to enhance the functionality and usability of this banking application.
 
@@ -89,7 +98,7 @@ Let's build a robust and efficient banking system together using Spring Boot mic
 
 Happy Banking! 🏦💰
 
-<h2 align="center">📞 Contact Information</h2>
+<h2>📞 Contact Information</h2>
 
 If you have any questions, feedback, or need assistance with this project, please feel free to reach out to me:
 
