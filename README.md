@@ -1,14 +1,10 @@
 <h1 align="center">🌟 Spring-Boot-Microservices-Banking-Application 🌟</h1>
 
-<h2 align="center">📋 Table of Contents</h2>
+<h2>📋 Table of Contents</h2>
 
 - [🔍 About](#-about)
 - [🏛️ Architecture](#-architecture)
 - [🚀 Microservices](#-microservices)
-  - [👤 User Service](#-user-service)
-  - [💼 Account Service](#-account-service)
-  - [💸 Fund Transfer Service](#-fund-transfer-service)
-  - [💳 Transaction Service](#-transaction-service)
 - [🚀 Getting Started](#-getting-started)
 - [📖 Documentation](#-documentation)
 - [⌚ Future Enhancement](#-future-enhancement)
