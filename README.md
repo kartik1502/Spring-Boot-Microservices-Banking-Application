@@ -30,63 +30,33 @@
 
 <h2>🚀 Microservices</h2>
 
-### 🔍 Service Registry
-- Manages microservices for easy discovery and registration.
+- **👤 User Service:** The user microservice provides functionalities for user management. This includes user registration, updating user details, viewing user information, and accessing all accounts associated with the user. Additionally, this microservice handles user authentication and authorization processes.
 
-### 🌐 API Gateway
-- Provides a single entry point to the microservices and handles routing.
+- **💼 Account Service:** The account microservice manages account-related APIs. It enables users to modify account details, view all accounts linked to the user profile, access transaction histories for each account, and supports the account closure process.
 
-### 👤 User Service
-- **Registration of User:** Register users with the banking system.
-- **Reading All Users:** Retrieve a list of all registered users.
-- **Reading User by ID:** Retrieve user details based on their unique ID.
-- **Reading User by account Id:** Reterive user details based on their account ID.
-- **Update User Status**: Modify the user detials based on the user request.
+- **💸 Fund Transfer Service:** The fund transfer microservice facilitates various fund transfer-related functionalities. Users can initiate fund transfers between different accounts, access detailed fund transfer records, and view specific details of any fund transfer transaction.
 
-### 💼 Account Service
-- **Creating an Account:** Users can create bank accounts.
-- **Updating an Account:** Modify account details such as account type or owner.
-- **Account Closing Endpoint:** Users can close their accounts.
-- **Read Account by Account number**: Read the account details based on the account number that are active.
-- **Read transaction for account:**: Reterive transactions that are made by specific account.
-
-### 💸 Fund Transfer Service
-- **Creating an Endpoint to Initiate Fund Transfer:** Transfer funds between accounts.
-- **Creating an Endpoint to Get Details of All Fund Transfers:** Retrieve details of all fund transfers made by the account.
-- **Creating an Endpoint to Get Details of a Particular Fund Transfer:** Get details of a specific fund transfer.
-
-### 💳 Transaction Service
-- **Creating an Endpoint to Get All Transactions Made by an Account:** Retrieve all transactions made by an account.
-- **Creating an Endpoint to Get Particular Transaction Details:** Retrieve details of a specific transaction.
-- **Make a transaction:** Make transaction such as deposit of amount to a bank account or withdraw money from the account.
-
----
+- **💳 Transactions Service:** The transaction service offers a range of transaction-related services. Users can view transactions based on specific accounts or transaction reference IDs, as well as make deposits or withdrawals from their accounts.
 
 <h2>🚀 Getting Started</h2>
 
-To get started with this Spring Boot Microservices Banking Application, follow these steps:
+To get started, follow these steps to run the application on your local application:
 
-1. Clone the repository to your local machine.
-2. Set up and configure the individual microservices (User Service, Account Service, Fund Transfer Service, Transaction Service).
-3. Start the microservices in the desired order (Service Registry, API Gateway, User Service, Account Service, Fund Transfer Service, Transaction Service).
-4. Explore the API documentation to understand how to make requests to each microservice.
-
----
+- Make sure you have Java 17 installed on your system. You can download it from the official Oracle website.
+- Select an Integrated Development Environment (IDE) such as Eclipse, Spring Tool Suite, or IntelliJ IDEA. Configure the IDE according to your preferences.
+- Clone the repository containing the microservices onto your local system using Git. Navigate to the directory where you have cloned the repository.
+- Navigate to each microservice directory within the cloned repository and run the application. You can do this by using your IDE or running specific commands depending on the build tool used (e.g., Maven or Gradle).
+- Set up Keycloak for authentication and authorization. Refer to the detailed configuration guide provided [here](https://devscribbles.hashnode.dev/mastering-microservices-authentication-and-authorization-with-keycloak) for step-by-step instructions on configuring Keycloak for your microservices.
+- Some microservices and APIs may depend on others being up and running. Ensure that all necessary microservices and APIs are up and functioning correctly to avoid any issues in the application workflow.
 
 <h2>📖 Documentation</h2>
 <h3>📖 API Documentation</h3>
 
-For detailed API documentation and usage instructions
-
-You can access the comprehensive [API Documentation](https://app.theneo.io/student/spring-boot-microservices-banking-application) in one place for a unified view of the entire banking application.
+For a detailed guide on API endpoints and usage instructions, explore our comprehensive [API Documentation](https://app.theneo.io/student/spring-boot-microservices-banking-application). This centralized resource offers a holistic view of the entire banking application, making it easier to understand and interact with various services.
 
 <h3>📚 Java Documentation (JavaDocs)</h3>
 
-The JavaDocs for all services together are available online for your convenience:
-
-- **Java Documentation:** [Java Documentation](https://kartik1502.github.io/Spring-Boot-Microservices-Banking-Application/)
-
-You can click on the link above to access the combined JavaDocs for all microservices. These JavaDocs provide detailed information about the classes, methods, and variables used in each microservice, making it easier for developers to understand and work with the codebase across all services.
+Explore the linked [Java Documentation](https://kartik1502.github.io/Spring-Boot-Microservices-Banking-Application/) to delve into detailed information about classes, methods, and variables across all microservices. These resources are designed to empower developers by providing clear insights into the codebase and facilitating seamless development and maintenance tasks.
 
 ---
 
