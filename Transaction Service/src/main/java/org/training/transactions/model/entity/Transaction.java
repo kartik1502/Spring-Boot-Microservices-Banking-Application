@@ -8,7 +8,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.training.transactions.model.TransactionStatus;
 import org.training.transactions.model.TransactionType;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

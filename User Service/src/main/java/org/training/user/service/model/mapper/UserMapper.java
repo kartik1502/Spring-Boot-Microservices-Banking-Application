@@ -11,8 +11,6 @@ import java.util.Objects;
 
 public class UserMapper extends BaseMapper<User, UserDto>{
 
-    private final ModelMapper mapper = new ModelMapper();
-
     @Override
     public User convertToEntity(UserDto dto, Object... args) {
 
