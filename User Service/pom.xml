@@ -17,7 +17,28 @@
         <java.version>17</java.version>
         <spring-cloud.version>2021.0.8</spring-cloud.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>aws-sdk-java</id>
+            <url>https://aws-sdk-java.amazonwebservices.com/release</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.29.6</version> <!-- Use the latest version available -->
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>auth</artifactId>
+            <version>2.29.6</version> <!-- Use the latest version available -->
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>regions</artifactId>
+            <version>2.29.6</version> <!-- Use the latest version available -->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -79,6 +100,10 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
         </dependency>
 
     </dependencies>

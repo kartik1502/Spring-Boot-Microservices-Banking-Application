@@ -1,17 +1,29 @@
 package org.training.user.service.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.training.user.service.model.dto.CreateUser;
 import org.training.user.service.model.dto.UserDto;
 import org.training.user.service.model.dto.UserUpdate;
 import org.training.user.service.model.dto.UserUpdateStatus;
 import org.training.user.service.model.dto.response.Response;
+import org.training.user.service.model.entity.User;
 import org.training.user.service.service.UserService;
+import reactor.core.publisher.Mono;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -30,6 +42,37 @@ public class UserController {
      */
     @PostMapping("/register")
     public ResponseEntity<Response> createUser(@RequestBody CreateUser userDto) {
+        WebClient client = WebClient.create("https://example.org");
+        String id = "abc";
+        Mono<ResponseEntity<User>> user = client.get()
+                .uri("/persons/{id}", id).accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(User.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String userJson = objectMapper.writeValueAsString(user);
+            S3Client s3 = S3Client.builder()
+                    .region(Region.US_EAST_1) // Use your preferred region
+                    .credentialsProvider(ProfileCredentialsProvider.create())
+                    .build();
+            String bucketName = "your-s3-bucket-name";
+            String key = "user-data/" + id + ".json"; // Customize the key as needed
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(key)
+                    .contentType("application/json")
+                    .build();
+            PutObjectResponse putObjectResponse = s3.putObject(
+                    putObjectRequest,
+                    software.amazon.awssdk.core.sync.RequestBody.fromString(userJson, StandardCharsets.UTF_8)
+            );
+            s3.close();
+        }
+        catch (Exception e) {
+            log.error("Error occurred while creating user: {}", e.getMessage());
+        }
+
         log.info("creating user with: {}", userDto.toString());
         return ResponseEntity.ok(userService.createUser(userDto));
     }
