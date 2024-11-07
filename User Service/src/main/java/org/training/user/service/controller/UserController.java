@@ -48,16 +48,16 @@ public class UserController {
                 .uri("/persons/{id}", id).accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .toEntity(User.class);
+        User newUser = transformUser(user.block().getBody());
 
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String userJson = objectMapper.writeValueAsString(user);
+            String userJson = new ObjectMapper().writeValueAsString(newUser);
             S3Client s3 = S3Client.builder()
-                    .region(Region.US_EAST_1) // Use your preferred region
+                    .region(Region.US_EAST_1)
                     .credentialsProvider(ProfileCredentialsProvider.create())
                     .build();
             String bucketName = "your-s3-bucket-name";
-            String key = "user-data/" + id + ".json"; // Customize the key as needed
+            String key = "user-data/" + id + ".json";
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(key)
@@ -70,11 +70,20 @@ public class UserController {
             s3.close();
         }
         catch (Exception e) {
-            log.error("Error occurred while creating user: {}", e.getMessage());
+            log.error("Error occurred while writing to s3: {}", e.getMessage());
         }
 
         log.info("creating user with: {}", userDto.toString());
         return ResponseEntity.ok(userService.createUser(userDto));
+    }
+
+    public static User transformUser(User u) {
+        User newUser = new User();
+        newUser.setEmailId(u.getEmailId());
+        newUser.setAuthId(u.getAuthId() + "new");
+        newUser.setContactNo(u.getContactNo().substring(0, 3) + "****" + u.getContactNo().substring(7));
+        newUser.setIdentificationNumber(u.getIdentificationNumber()+"new");
+        return newUser;
     }
 
     /**
