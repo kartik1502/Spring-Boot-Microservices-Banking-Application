@@ -1,5 +1,4 @@
 <h1 align="center">🌟 Spring-Boot-Microservices-Banking-Application 🌟</h1>
-
 <h2>📋 Table of Contents</h2>
 
 - [🔍 About](#-about)
@@ -48,6 +47,15 @@ To get started, follow these steps to run the application on your local applicat
 - Some microservices and APIs may depend on others being up and running. Ensure that all necessary microservices and APIs are up and functioning correctly to avoid any issues in the application workflow.
 
 <h2>📖 Documentation</h2>
+<h3>📂 Microservices Documentation</h3>
+
+For detailed information about each microservice, refer to their respective README files:
+
+- [👤 User Service](./user-service/README.md)
+- [💼 Account Service](./account-service/README.md)
+- [💸 Fund Transfer Service](./fund-transfer-service/README.md)
+- [💳 Transactions Service](./transactions-service/README.md)
+
 <h3>📖 API Documentation</h3>
 
 For a detailed guide on API endpoints and usage instructions, explore our comprehensive [API Documentation](https://app.theneo.io/student/spring-boot-microservices-banking-application). This centralized resource offers a holistic view of the entire banking application, making it easier to understand and interact with various services.
