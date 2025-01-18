@@ -51,10 +51,10 @@ To get started, follow these steps to run the application on your local applicat
 
 For detailed information about each microservice, refer to their respective README files:
 
-- [👤 User Service](./user-service/README.md)
-- [💼 Account Service](./account-service/README.md)
-- [💸 Fund Transfer Service](./fund-transfer-service/README.md)
-- [💳 Transactions Service](./transactions-service/README.md)
+- [👤 User Service](./User-Service/README.md)
+- [💼 Account Service](./Account-Service/README.md)
+- [💸 Fund Transfer Service](./Fund-Transfer/README.md)
+- [💳 Transactions Service](./Transaction-Service/README.md)
 
 <h3>📖 API Documentation</h3>
 
